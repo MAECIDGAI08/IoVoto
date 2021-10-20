@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Html;
+@inject IViewLocalizer Localizer
+@{
+    Layout = "_LayoutVoted";
+}
+<div class="container">
+    @inject IStringLocalizer<SharedResource> Localizer
+    <div class="row">
+        <div class="col-sm-3 col-md-3 col-lg-2 col-xl-2">
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8 mt-5 mb-5 pl-2 pr-2 pt-2 pb-2">
+            <div class="lookC">
+                <div>
+                    <i class="fa fa-handshake-o fa-5x fa-pull-left text-success pl-3" aria-hidden="true"></i>
+                    <h2 class="font-weight-bold">@Localizer["CV-Ct1"]</h2>                   
+                    <h1 class="font-weight-bold text-center text-success">@Localizer["CV-Ct2"]</h1>                   
+                    <h3 class="font-weight-bold">@Localizer["CV-Ct5"]</h3>
+                </div>                
+            </div>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-2 col-xl-2"></div>
+    </div>
+</div>
+
+
+

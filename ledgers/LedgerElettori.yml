@@ -1,0 +1,40 @@
+﻿assets:
+    - name: elettore      
+      properties:
+      - name: uniqueID
+        type: string
+        mandatory: true
+        id: true
+      - name: nome
+        type: string
+        mandatory: true
+      - name: cognome
+        type: string
+        mandatory: true
+      - name: sesso
+        type: string
+        mandatory: true
+      - name: datadiNascita
+        type: string
+        mandatory: true
+      - name: luogodiNascita
+        type: string
+        mandatory: true
+      - name: codiceFiscale
+        type: string
+        mandatory: false
+      - name: codiceElettore
+        type: string
+        mandatory: true
+      - name: comites
+        type: string
+        mandatory: true
+      - name: pseudonimo
+        type: string
+        mandatory: true
+      methods:
+       crud: [create, getById, update, delete]
+       others: [getHistoryById, getByRange, getByCodiceFiscale, getByCodiceElettore]
+customMethods:
+    - "getFullElettori(CodiceFiscale: string, CodiceElettore: string, DataNascita: string)"
+    - "getNumeroElettoriByComites(comites : string)"

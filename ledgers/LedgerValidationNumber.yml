@@ -1,0 +1,26 @@
+﻿assets:
+    - name: validationnumber
+      properties:
+      - name: pseudonimo
+        type: string
+        mandatory: true
+        id: true
+      - name: validationNumber
+        type: string
+        mandatory: false
+      - name: expire
+        type: string
+        mandatory: false
+      - name: used
+        type: boolean
+        mandatory: true
+      - name: comites
+        type: string
+        mandatory: true 
+      methods:
+       crud: [create, getById, update]
+       others: [getHistoryById, getByRange]
+customMethods:
+    - "invalidate(pseudonimo: string)"
+    - "setValidationNumber(pseudonimo: string, validationNumber: string)"
+    - "getValidationNumbersByComites(comites : string)" 

@@ -1,0 +1,70 @@
+﻿assets:
+  - name: uniqueIds
+    type: embedded
+    properties:
+      - name: ids
+        type: string[]
+        mandatory: true   
+  - name: candidati
+    type: embedded
+    properties:
+      - name: candidato
+        type: candidato[]
+        mandatory: true
+        
+  - name: candidato
+    type: embedded
+    properties:
+      - name: nomeCandidato
+        type: string
+        mandatory: true
+      - name: cognomeCandidato
+        type: string
+        mandatory: true
+      - name: dataNascitaCandidato
+        type: string
+        mandatory: true
+      - name: luogoNascitaCandidato
+        type: string
+        mandatory: true
+      - name: ordine
+        type: number
+        mandatory: true
+      - name: comites
+        type: string
+        mandatory: true
+
+  - name: votoElettore
+    properties:
+      - name: uniqueId
+        type: string
+        mandatory: true
+        id: true
+      - name: lista
+        type: string
+        mandatory: true
+      - name: nomeCandidato
+        type: string
+        mandatory: true
+      - name: cognomeCandidato
+        type: string
+        mandatory: true
+      - name: dataNascitaCandidato
+        type: string
+        mandatory: true
+      - name: luogoNascitaCandidato
+        type: string
+        mandatory: true
+      - name: comites
+        type: string
+        mandatory: true
+      - name: ordine
+        type: number
+        mandatory: true
+    methods:
+      crud: [create, getById]
+      others: [getHistoryById, getByRange]
+customMethods:
+    - "vote(uniqueIds: UniqueIds, lista: string, candidati : Candidati , pseudonimo: string)"
+    - "countVotesFor(nomeCandidato : string, cognomeCandidato : string, dataNascitaCandidato : string, luogoNascitaCandidato : string, comites : string)"
+  

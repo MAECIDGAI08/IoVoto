@@ -1,0 +1,16 @@
+﻿assets:
+    - name: tokens
+      properties:
+      - name: token
+        type: string
+        mandatory: true
+        id: true
+      - name: date
+        type: string
+        mandatory: true
+      - name: codiceFiscale
+        type: string
+        mandatory: true
+      methods:
+       crud: [create, getById, update]
+       others: [getHistoryById, getByRange]

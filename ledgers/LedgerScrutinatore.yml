@@ -1,0 +1,19 @@
+﻿assets:
+    - name: scrutinatore
+      properties:
+      - name: nome
+        type: string
+        mandatory: true
+      - name: cognome
+        type: string
+        mandatory: true
+      - name: codiceFiscale
+        type: string
+        mandatory: true
+        id: true
+      - name: comites
+        type: string[]
+        mandatory: true
+      methods:
+        crud: [create, getById, update, delete]
+        others: [getHistoryById, getByRange, executeQuery]

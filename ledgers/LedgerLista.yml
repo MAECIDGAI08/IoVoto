@@ -1,0 +1,44 @@
+﻿---
+assets:
+    - name: lista
+
+      properties:
+      - name: name
+        type: string
+        mandatory: true
+        id: true
+      
+      - name: imageUrl
+        type: string
+        mandatory: true
+      
+      - name: comites
+        type: string
+        mandatory: true
+      
+      - name: rangoSedeCompetenza
+        type: string
+        mandatory: true
+
+      - name: cittaSedeCompetenza
+        type: string
+        mandatory: true
+      
+      - name: timeZone
+        type: number
+        mandatory: true
+      
+      - name: maxSel
+        type: number
+        mandatory: true
+       
+      - name: ordine
+        type: number
+        mandatory: true
+
+        methods:
+          crud: [create, getById, update]
+          others: [getHistoryById, getByRange]
+customMethods:
+    - "getListe(comites: string)"
+    - "getTimeZone(comites: string)"

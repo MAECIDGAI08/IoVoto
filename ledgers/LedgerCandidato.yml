@@ -1,0 +1,39 @@
+﻿---
+assets:
+    - name: Candidato
+      
+      properties:
+      - name: uniqueID
+        type: string             
+        mandatory: true
+        id: true
+
+      - name: nomeCandidato
+        type: string
+        mandatory: true
+    
+      - name: cognomeCandidato
+        type: string
+        mandatory: true
+
+      - name: dataNascitaCandidato
+        type: string
+        mandatory: true
+
+      - name: luogoNascitaCandidato
+        type: string
+        mandatory: true
+
+      - name: ordine
+        type: number
+        mandatory: true
+            
+      - name: lista
+        type: string
+        mandatory: true
+ 
+        methods:
+          crud: [create, getById, update, delete]
+          others: [getHistoryById, executeQuery]
+customMethods:
+    - "getCandidati(lista: string)"

@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+
+@inject IViewLocalizer Localizer
+@inject IStringLocalizer<SharedResource> Localizer
+@{
+    ViewData["Title"] = "Sessione Scaduta";
+}
+
+<div class="alert alert-danger text-center mt-5 mb-5">
+    <i class="fa fa-exclamation-triangle fa-5x fa-pull-left" aria-hidden="true"></i>
+    <h1>@Localizer["Help Sessione 1"]</h1>
+    <h3>@Localizer["Help Sessione 2"]</h3>
+    <h3>@Localizer["Help Sessione 3"]</h3>
+</div>
+<div class="text-center">
+    <a class="pc-button pc-button-blue mb-5" data-form="register-form" asp-controller="Home" title="@Localizer["UI-Sessione-Titolo"]" asp-action="Index">@Localizer["UI-Sessione"]</a>
+    <partial name="_ButtonAppA" />
+
+</div>

@@ -1,0 +1,16 @@
+﻿@using System.Data;
+@using Utility;
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+</head>
+<body onload="document.getElementById('IDPform').submit();">
+    <form method="POST" action="@ViewData["URL"]" id="IDPform" style="display:none;">
+        <input type="hidden" id="id_token" name="id_token" value="@ViewData["JWT"]"/>
+    </form>
+</body>
+</html>
+

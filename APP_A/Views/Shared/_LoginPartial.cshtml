@@ -1,0 +1,27 @@
+﻿@*INTEGRAZIONE SPID*@
+
+@*@using Microsoft.AspNetCore.Identity
+
+    @inject SignInManager<ApplicationUser> SignInManager
+    @inject UserManager<ApplicationUser> UserManager*@
+
+@*@if (SignInManager.IsSignedIn(User))
+    {
+        var userData = await UserManager.GetUserAsync(User);
+        <li class="nav-item">
+            <a href="javascript:void(0);" class="nav-link text-dark" onclick="$('#logout-form').submit();">Logout</a>
+        </li>
+        <li>
+            <a class="userbadge d-sm-block d-none" asp-area="" asp-controller="Profile" asp-action="">
+                @(userData.FirstName.ToString().ToUpper().Substring(0, 1) + userData.LastName.ToString().ToUpper().Substring(0, 1))
+            </a>
+        </li>
+        <li>
+            <form id="logout-form" style="display:none;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" aria-label="Logout">
+            </form>
+        </li>
+    }
+    else
+    {
+
+    }*@

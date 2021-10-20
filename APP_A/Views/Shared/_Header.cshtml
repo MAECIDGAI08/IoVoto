@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@*INTEGRAZIONE SPID*@
+@*@using Fluent.Infrastructure.FluentModel;
+    @inject SignInManager<ApplicationUser> SignInManager
+    @inject UserManager<ApplicationUser> UserManager*@
+@*END INTEGRAZIONE SPID*@
+@inject IViewLocalizer Localizer
+
+@inject IStringLocalizer<SharedResource> Localizer
+@{
+    bool ExitVisible = ViewBag.Exit;
+}
+<header class="lookB pt-4 pb-4">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                <img src="~/img/header-logo.png" alt="" class="img-fluid logo-img" />
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center text-center">
+                <h1 class="text-center lookD display-4">@Localizer["Sito-Nome"]</h1>
+                <h4 class="text-center lookD">@Localizer["Sito-SottotitoloA"]</h4>
+                <h5 class="text-center lookD">@Localizer["Sito-SottotitoloB"] @DateTime.Now.Year</h5>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 align-self-center">
+                @if (ExitVisible == true)
+                {
+
+                     @*@{
+                    if (SignInManager.IsSignedIn(User))
+                    {*@
+                    <partial name="_ExitButton" />     
+                    @*}
+                    else
+                    {
+
+                    }
+                    }@*@
+                }
+
+            </div>
+        </div>
+    </div>
+</header>
+@*<form id=form-set-language method="post" action="/home/setlanguage">
+        <input type="hidden" id="form-set-language-culture" name="culture">
+        <input type="hidden" id="form-set-language-return-url" name="returnUrl" value="@Context.Request.Path">
+        <ul>
+            <li><a title="premere qui per settare la lingua in italiano" class="linguaggio" onclick="setlanguage('it-IT')">ITALIANO</a></li>
+            <li><a title="press here to set english language" class="linguaggio" onclick="setlanguage('en')">ENGLISH</a></li>
+        </ul>
+    </form>*@

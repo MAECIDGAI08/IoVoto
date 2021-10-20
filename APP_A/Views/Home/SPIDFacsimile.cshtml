@@ -1,0 +1,117 @@
+﻿@*@inject SignInManager<ApplicationUser> SignInManager   
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div id="carouselExampleSlidesOnly" class="carousel slide lookB mt-4 mb-4" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="~/img/elections.png" class="imgTestata" />
+                        <h2 class="pt-2">@Localizer["Benvenuto1"]</h2>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/img/ballot.png" class="imgTestata" />
+                        <h2 class="pt-1">@Localizer["Benvenuto2"]</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 myspid text-center">-->
+            @{
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="panel">
+                        <div class="panel-heading"><i class="material-icons align-middle mr-2">account_circle</i>Il mio account</div>
+                        <div class="panel-body">
+                            <div class="panel-item"><a class="pc-button pc-button-blue" asp-area="" asp-controller="Profile" asp-action="" aria-label="Profilo"><i class="material-icons">assignment</i><span>PROFILO</span></a></div>
+                            <div class="panel-item"><a class="pc-button pc-button-green" asp-area="" asp-controller="Profile" asp-action="EditMail" aria-label="Modifica email"><i class="material-icons">contact_mail</i><span>MODIFICA EMAIL</span></a></div>
+                            <div class="panel-item"><a class="pc-button pc-button-red" asp-area="" asp-controller="Profile" asp-action="EditPassword" aria-label="Reset password"><i class="material-icons">lock</i><span>RESET PASSWORD</span></a></div>
+                            <div class="panel-item"><a href="javascript:void(0);" class="pc-button pc-button-grey" onclick="$('#logout-form').submit();" aria-label="Logout"><i class="material-icons">exit_to_app</i><span>LOGOUT</span></a></div>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-heading"><i class="material-icons align-middle mr-2">local_library</i>Il mio portale</div>
+                        <div class="panel-body">
+                            <div class="panel-item"><a class="pc-button pc-button-blue" asp-area="" asp-controller="Concorsi" asp-action="MyConcorsi" aria-label="I miei concorsi"><i class="material-icons">school</i><span>I MIEI CONCORSI</span></a></div>
+                            <div class="panel-item"><a class="pc-button pc-button-green" asp-area="" asp-controller="Documents" asp-action="" aria-label="Documenti"><i class="material-icons">style</i><span>DOCUMENTI</span></a></div>
+                            <div class="panel-item"><a class="pc-button pc-button-red" asp-area="" asp-controller="Threads" asp-action="" aria-label="Messaggi"><i class="material-icons">question_answer</i><span>MESSAGGI</span></a></div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="panel">
+                        <div class="panel-heading"><i class="material-icons align-middle mr-2">account_circle</i>Accesso</div>
+                        <div class="panel-body">
+                            <div class="panel-item"><a class="pc-button pc-button-blue" asp-area="Identity" asp-page="/Account/Login" aria-label="Accedi"><i class="material-icons">account_box</i><span>ACCEDI</span></a></div>
+                            <div class="spid-div" style="@(ViewData["DisableSPID"].ToString()=="1"?"display:none;":"")">
+                                 AGID - SPID IDP BUTTON MEDIUM "ENTRA CON SPID" * begin * 
+
+                                <a href="#" class="italia-it-button italia-it-button-size-m button-spid" spid-idp-button="#spid-idp-button-medium-get" aria-haspopup="true" aria-expanded="false">
+                                    <span class="italia-it-button-icon"><img src="~/img/spid-ico-circle-bb.png" alt="" /></span>
+                                    <span class="italia-it-button-text">Entra con SPID</span>
+                                </a>
+                                <div id="spid-idp-button-medium-get" class="spid-idp-button spid-idp-button-tip spid-idp-button-relative">
+                                    <ul id="spid-idp-list-medium-root-get" class="spid-idp-button-menu" aria-labelledby="spid-idp">
+                                        <li class="spid-idp-button-link" data-idp="arubaid">
+                                            <a href="@(ViewData["outURL"])?entityID=@(ViewData["arubaid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Aruba ID</span><img src="~/img/spid-idp-arubaid.png" alt="Aruba ID" /></a>
+                                        </li>
+                                        <li class="spid-idp-button-link" data-idp="infocertid">
+                                            <a href="@(ViewData["outURL"])?entityID=@(ViewData["infocertid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Infocert ID</span><img src="~/img/spid-idp-infocertid.png" alt="Infocert ID" /></a>
+                                        </li>
+                                        <li class="spid-idp-button-link" data-idp="intesaid">
+                                            <a href="@(ViewData["outURL"])?entityID=@(ViewData["intesaid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Intesa ID</span><img src="~/img/spid-idp-intesaid.png" alt="Intesa ID" /></a>
+                                        </li>
+                                        <li class="spid-idp-button-link" data-idp="lepidaid">
+                                            <a href="@(ViewData["outURL"])?entityID=@(ViewData["lepidaid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Lepida ID</span><img src="~/img/spid-idp-lepidaid.png" alt="Lepida ID" /></a>
+                                        </li>
+                                        <li class="spid-idp-button-link" data-idp="namirialid">
+                                            <a href="@(ViewData["outURL"])?entityID=@(ViewData["namirialid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Namirial ID</span><img src="~/img/spid-idp-namirialid.png" alt="Namirial ID" /></a>
+                                        </li>
+                                        <li class="spid-idp-button-link" data-idp="posteid">
+                                            <a href="@(ViewData["outURL"])?entityID=@(ViewData["posteid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Poste ID</span><img src="~/img/spid-idp-posteid.png" alt="Poste ID" /></a>
+                                        </li>
+                                        <li class="spid-idp-button-link" data-idp="spiditalia">
+                                            <a href="@(ViewData["outURL"])?entityID=@(ViewData["spiditalia"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">SPIDItalia Register.it</span><img src="~/img/spid-idp-spiditalia.png" alt="SpidItalia" /></a>
+                                        </li>
+                                        <li class="spid-idp-button-link" data-idp="sielteid">
+                                            <a href="@(ViewData["outURL"])?entityID=@(ViewData["sielteid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Sielte ID</span><img src="~/img/spid-idp-sielteid.png" alt="Sielte ID" /></a>
+                                        </li>
+                                        <li class="spid-idp-button-link" data-idp="timid">
+                                            <a href="@(ViewData["outURL"])?entityID=@(ViewData["timid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Tim ID</span><img src="~/img/spid-idp-timid.png" alt="Tim ID" /></a>
+                                        </li>
+                                        <li class="spid-idp-support-link">
+                                            <a href="https://www.spid.gov.it">Maggiori informazioni</a>
+                                        </li>
+                                        <li class="spid-idp-support-link">
+                                            <a href="https://www.spid.gov.it/richiedi-spid">Non hai SPID?</a>
+                                        </li>
+                                        <li class="spid-idp-support-link">
+                                            <a href="https://www.spid.gov.it/serve-aiuto">Serve aiuto?</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                End menù provider
+                            </div>
+                        </div>
+                    </div>
+                }
+            }          
+        </div>
+    </div>
+
+    <div class="row align-items-start mb-5">
+        <div class="col-md-4">
+            <div class="alert alert-success lookB lookH" role="alert">
+                <i class="fa fa-info-circle fa-3x fa-pull-left" aria-hidden="true"></i>
+                <p>@Localizer["Help1"]</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="alert alert-success lookB lookH" role="alert">
+                <i class="fa fa-info-circle fa-3x fa-pull-left" aria-hidden="true"></i>
+                <p>@Localizer["Help2"]</p>
+            </div>
+        </div>
+    </div>   
+</div>*@

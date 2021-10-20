@@ -1,0 +1,259 @@
+﻿/* Start generic */
+* {
+    text-rendering: optimizeLegibility;
+}
+
+@font-face { /*importo una famiglia di font*/
+    font-family: Titillium_Web; /*carattere tipografico scelto dall'AGID come carattere ufficiale delle istituzioni*/
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-Black.ttf); /*variazioni di stile nello stesso font*/
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-Bold.ttf);
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-BoldItalic.ttf);
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-ExtraLight.ttf);
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-ExtraLightItalic.ttf);
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-Italic.ttf);
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-Light.ttf);
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-LightItalic.ttf);
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-Regular.ttf);
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-SemiBold.ttf);
+    src: url(../fonts/TitilliumWeb/TitilliumWeb-SemiBoldItalic.ttf);
+}
+
+html, body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-size: 1.1rem;
+    font-family: 'Titillium Web', Arial, Helvetica, sans-serif !important;
+    color: rgb(0, 38, 77) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-left: 0.5em;
+    font-weight: bold;
+}
+/* End generic */
+
+/* Start header */
+header {
+    background-color: #0066cc;
+    height: auto;
+    color: white;
+    text-align: center;
+    border-top: 1px solid rgb(0, 38, 77);
+    border-bottom: 1px solid rgb(0, 38, 77);
+}
+
+/* classe logo maeci header */
+.logo-img {
+    max-width: 220px;
+    height: auto;
+    /*margin: 20px 0px 20px 0px;*/
+    margin-left: 1em;
+}
+
+
+
+.linguaggio {
+    color: white;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    font-weight: bold;
+}
+
+.languageSelector {
+    background-color: #0066cc;
+    color: white;
+    font-weight: bolder;
+    border: none;
+    text-transform: uppercase;
+}
+
+/* Start style div's */
+.look {
+    border: 1px solid lightgrey;
+    border-radius: 0.5em;
+    margin: 0.25em 0.25em 0.25em 0.25em;
+    padding: 0.25em 0.25em 0px 0.25em;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+}
+
+.lookB {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.lookC {
+    border-radius: 0.5em;
+    margin: 0.25em 0.25em 0.25em 0.25em;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    /*box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;*/
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+.lookD {
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4), 0px 8px 13px rgba(0,0,0,0.1), 0px 18px 23px rgba(0,0,0,0.1);
+}
+
+.lookH {
+    background-color: rgb(0, 38, 77) !important;
+    color: white !important;
+    border-radius: 0.5em;
+    margin: 0.25em 0.25em 0.25em 0.25em;
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    /*box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;*/
+    /*box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;*/
+}
+/* End style div's */
+
+
+.footer {
+    background-color: rgb(0, 38, 77) !important;
+    line-height: 30px;
+    padding-top: 10px;
+    color: white !important;
+}
+
+    .footer .row {
+        max-width: 100%;
+    }
+
+    .footer .container {
+        padding: 14px;
+    }
+
+    .footer ul {
+        list-style-type: none;
+    }
+
+        .footer ul li, .list-p {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+            .footer ul li:last-of-type, .list-p:last-of-type {
+                border-bottom: 1px solid transparent;
+            }
+
+    .footer a {
+        font-size: 1rem;
+        transition: color 0.3s;
+        color: #65DDE0 !important;
+        border: 0px;
+    }
+
+    .footer a:hover {
+            text-decoration: none;
+            color: #FFFFFF !important;
+        }
+
+        .footer .logo-img {
+        margin: 0px 0px 20px 0px;
+    }
+
+/* liste */
+
+    li.riepilogo {
+        font-size: 1.4em;
+        text-align: left !important;
+        margin-left: 20%;
+    }
+
+
+
+/* Override bootstrap */
+.alert {
+    margin-bottom: 0.25rem !important;
+}
+
+span.pb {
+    font-size: 1.4em;
+}
+
+.mae {
+   color: rgb(0, 38, 77) !important;
+}
+
+/* Start common UI */
+.pc-button {
+    transition: color 0.5s;
+    display: inline-block;
+    min-width: 140px;
+    padding: 0.5rem;
+    margin: 10px 1px;
+    border-radius: 0.25em;
+}
+
+    .pc-button.pc-button-white {
+        background-color: #FFFFFF;
+        border: 2px solid #FFFFFF;
+    }
+    /*classe che stilizza il testo nei button*/
+    .pc-button.pc-button-blue {
+        color: #2E629C;
+        border: 2px solid #2E629C;
+    }
+
+    .pc-button.pc-button-grey {
+        color: #6C757D;
+        border: 2px solid #6C757D;
+    }
+
+    .pc-button.pc-button-yellow {
+        color: #FFC107;
+        border: 2px solid #FFC107;
+    }
+
+    .pc-button.pc-button-red {
+        background-color: white;
+        color: #DC3545;
+        border: 2px solid #DC3545;
+    }
+
+    .pc-button.pc-button-green {
+        color: #28A745;
+        border: 2px solid #28A745;
+    }
+
+    .pc-button:hover {
+        text-decoration: none;
+    }
+
+    .pc-button.pc-button-white:hover {
+        color: #808080;
+        background-color: #FFFFFF;
+    }
+    /*evidenzia il tasto al passaggio del mouse*/
+    .pc-button.pc-button-blue:hover {
+        color: #FFFFFF;
+        background-color: #2E629C;
+    }
+
+    .pc-button.pc-button-grey:hover {
+        color: #FFFFFF;
+        background-color: #6C757D;
+    }
+
+    .pc-button.pc-button-yellow:hover {
+        color: #FFFFFF;
+        background-color: #FFC107;
+    }
+
+    .pc-button.pc-button-red:hover {
+        color: #FFFFFF;
+        background-color: #DC3545;
+    }
+
+    .pc-button.pc-button-green:hover {
+        color: #FFFFFF !important;
+        background-color: #28A745;
+    }
+
+.verde {
+    color: #28A745;
+}
+
+.nero {
+    color: black !important;
+}
+
+
+/* End common UI */

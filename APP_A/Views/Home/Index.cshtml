@@ -1,0 +1,108 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@inject IViewLocalizer Localizer
+
+@inject IStringLocalizer<SharedResource> Localizer
+@{
+    Layout = "_Layout";
+    int SitoAperto = ViewBag.SitoAperto;
+    bool debug = false;
+}
+
+@*<partial name="_Header_Index" />*@
+<div class="container">
+    <div class="row">
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <div id="carouselExampleSlidesOnly" class="carousel slide lookB mt-4 mb-4" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="~/img/elections.png" class="imgTestata" />
+                        <h2 class="pt-2 font-weight-bold nero">@Localizer["Benvenuto1"]</h2>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="~/img/ballot.png" class="imgTestata" />
+                        <h2 class="pt-1 font-weight-bold nero">@Localizer["Benvenuto2"]</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 myspid text-center">
+            @if (SitoAperto == 0)
+            {
+                @*@SitoAperto*@
+                <partial name="_SitoPrimaElezione" />
+            }
+
+            @if (SitoAperto == 1)
+            {
+
+                @*@SitoAperto*@
+                <!-- AGID - SPID IDP BUTTON MEDIUM "ENTRA CON SPID" * begin * -->
+                <partial name="_Spid" />
+
+            }
+
+            @if (SitoAperto == 2)
+            {
+                @*@SitoAperto*@
+                <partial name="_SitoDopoElezione" />
+            }
+
+            @if (debug == true)
+            {
+                <div class="bg-info lookC">
+                    <h1>Debug: @debug</h1>
+                    <ol>
+                        <li>
+                            <a class="pc-button pc-button-blue form-submit" data-form="register-form" asp-controller="Home" title="@Localizer["UI-Leggi-Titolo"]" asp-action="FintoSpid">@Localizer["UI-Leggi"]</a>
+                        </li>
+                        <li>
+                            <a class="pc-button pc-button-blue form-submit" data-form="register-form" asp-controller="Home" title="@Localizer["UI-Leggi-Titolo"]" asp-action="CodiceElettore">@Localizer["UI-Leggi"]</a>
+                        </li>
+                        <li>
+                            <a class="pc-button pc-button-blue form-submit" data-form="register-form" asp-controller="Home" title="@Localizer["UI-Leggi-Titolo"]" asp-action="RicevutadiVoto">@Localizer["UI-Leggi"]</a>
+                        </li>
+                        <li>
+                            <a class="pc-button pc-button-blue form-submit" asp-controller="Home" title="@Localizer["UI-Leggi-Titolo"]" asp-action="ControlloVoto">Controllo Voto]</a>
+                        </li>
+
+
+                    </ol>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row align-items-start mb-5">
+        <div class="col-md-4">
+            <div class="alert alert-success lookB lookH" role="alert">
+                <i class="fa fa-info-circle fa-3x fa-pull-left" aria-hidden="true"></i>
+                <p>@Localizer["Help1"]</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="alert alert-success lookB lookH" role="alert">
+                <i class="fa fa-info-circle fa-3x fa-pull-left" aria-hidden="true"></i>
+                <p>@Localizer["Help2"]</p>
+                @*<p>@Localizer["Help3"]&nbsp;@Localizer["UI-Leggi"]</p>*@
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-start mb-5">
+        <div class="col-md-87">
+            <div class="alert alert-success lookB lookH" role="alert">
+                <i class="fa fa-info-circle fa-3x fa-pull-left" aria-hidden="true"></i>
+                <p>
+                    In caso di problemi nella procedura di voto, si suggerisce di inviare una mail a <a href="mailto:iovoto@esteri.it">iovoto@esteri.it</a>, indicando almeno il proprio
+                    cognome nella richiesta di assistenza. Le richieste verranno prese in carico tra le ore <b>8.00 e le ore 16.00 italiane</b>, per cui in alcuni casi sarà necessario attendere il giorno successivo per avere riscontro.
+                </p>
+                <p><u><b>ATTENZIONE! NON SI FORNISCE ASSISTENZA IN CASO DI PROBLEMI DI AUTENTICAZIONE COL SERVIZIO SPID.</b></u></p> 
+                <p>Per assistenza su SPID è possibile consultare questo link dedicato: <a href="https://test-www.spid.gov.it/ottieni-assistenza-dagli-identity-provider/">Aiuto SPID Providers</a></p>   
+               
+            </div>
+        </div>
+    </div>
+    @*<partial name="_Footer" />*@

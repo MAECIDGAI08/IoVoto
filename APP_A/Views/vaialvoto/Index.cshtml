@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IViewLocalizer Localizer
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor sessione
+
+@inject IStringLocalizer<SharedResource> Localizer
+<div class="row">
+    <div class="container">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-5">
+            <div class="container mt-2 mb-2">
+                <div class="jumbotron lookH">
+                    <h1 class="display-4">@Localizer["Help6"] @ViewData["Comites"]</h1>
+                    <p class="lead">@Localizer["Help4"]</p>
+                    <ol class="list-group list-group-flush list-unstyled">
+                        <li class="list-group-item list-group-item-primary mt-2"><i class="fa fa-file-download fa-2x fa-pull-left" aria-hidden="true"></i> @Localizer["Voto1"]</li>
+                        <li class="list-group-item list-group-item-primary mt-2"><i class="fa fa-list-alt fa-2x fa-pull-left" aria-hidden="true"></i> @Localizer["Voto2"]</li>
+                    </ol>
+                    <ol class="list-group list-group-flush list-unstyled mt-2">
+                        <li class="list-group-item list-group-item-primary mt-2"><i class="fa fa-check-square-o fa-2x fa-pull-left" aria-hidden="true"></i> @Localizer["Voto3"]</li>
+                    </ol>
+                    <ol class="list-group list-group-flush list-unstyled mt-2">
+                        <li class="text-center mt-2 mb-2"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></li>
+                        <li class="list-group-item list-group-item-light"><i class="fa fa-file-download fa-2x fa-pull-left" aria-hidden="true"></i> @Localizer["Voto5"]</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+</div>
+    <div class="row">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+            <div class="col">
+                <input type="hidden" name="param_001" value="" />
+                <input type="hidden" name="param_002" value="" />
+                <input type="hidden" name="param_003" value="" />
+                <div class="text-center mt-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <input type="checkbox" id="CheckVoto">
+                        </div>
+                        <label class="form-check-label">&nbsp;@Localizer["Acconsento"]</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-2"></div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center mt-2">
+            <a href="@ViewData["URL"]" class="pc-button pc-button-blue text-center text-uppercase" id="VaiAlVoto" title="@Localizer["UI-Vai-Titolo"]"><i class="fa fa-external-link fa-fw" aria-hidden="true"></i> @Localizer["UI-Vai"] </a>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"></div>
+    </div>

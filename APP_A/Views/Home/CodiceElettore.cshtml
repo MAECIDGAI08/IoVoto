@@ -1,0 +1,62 @@
+﻿@*@model AppA.Models.GetFullElettoriOut*@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+
+@inject IViewLocalizer Localizer
+
+@inject IStringLocalizer<SharedResource> Localizer
+
+
+<div class="container">
+    <div id="divWarnig" class="col-sm-12 col-md-12 col-lg-12 col-xl-12  text-center mt-4 hidden">
+        <div class="alert alert-danger lookC" role="alert">
+            <h3 class="text-uppercase"><i class="fa fa-2x fa-exclamation-circle" aria-hidden="true"></i> @Localizer["Help CE Error"]</h3>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center mt-4 mb-5" id="test">
+          @{
+            bool codice = (bool)ViewData["controlloCodicePratica"];
+            if (!codice)    //se riceve false dal server => formato codice pratica non presente in archivio
+            { <!--viene visualizzato il div contenente l' errore-->
+                <div class="alert alert-danger" role="alert">
+                    <h3>Attenzione, il codice inserito non è nella lista degli elettori, riprova nuovamente.</h3>
+                </div>
+            }
+        }
+    </div>                 @*controllo client*@                                                  @*invio codice al server*@            @*chiamata server per un ulteriore check sul codice elttore*@
+<form id="ce" onsubmit="SetCodicePratica(document.getElementById('CodiceElettoreclient'));" method="post" asp-controller="Login" asp-action="LoginFromCE">
+    <div class="row text-center">
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2  text-center">
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 lookB lookH text-center mb-3 mt-3">
+            <div id="fileImg" class="hidden">
+                <img src="~/img/Facsimile_CodiceElettore.jpg" alt="" class="logo-img-footer" />
+                <a id="closeDivImg" class="align-top" href="javascript:void(0);" title="@Localizer["UI-Chiudi-DivCodice-Elettore"]"><i class="fa fa-window-close mt-3"></i></a>
+            </div>
+            <i class="fa fa-pencil-square-o fa-3x fa-pull-left" aria-hidden="true"></i>
+            <h1 class="font-weight-bold">
+                @Localizer["HelpCE1"]
+            </h1>
+            <h3 class="font-weight-bold">
+                @Localizer["HelpCE2"]
+            </h3>
+            <a id="openDivImg" class="btn-link text-uppercase" href="javascript:void(0);" title="@Localizer["UI-Esempio-Codice-Elettore"]">@Localizer["UI-link-PH"]</a>
+            <div class="form-group pt-3">
+                <input type="text" required placeholder="@Localizer["UI-Input-PH"]" class="form-control" name="CodiceElettoreclient" id="CodiceElettoreclient" title="@Localizer["UI-Input-Titolo"]">
+            </div>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2 text-center">
+        </div>
+        <div class="col-12 text-center">
+            @*<a onclick="FunzioneElettore();"  id="buttonCodice" class="pc-button pc-button-blue text-uppercase disabled" asp-controller="Home" asp-action="VaiAlVoto"></a>*@
+            @*<a id="buttonCodice" onclick="SetCodicePratica(document.getElementById('regex'));" title="@Localizer["UI-Codice-Elettore"]" class="pc-button pc-button-blue text-uppercase" asp-controller="Home"*@
+            <button type="submit" id="buttonCodice" title="@Localizer["UI-Codice-Elettore"]" class="pc-button pc-button-blue text-uppercase">
+                @Localizer["UI-Codice-Elettore"]
+            </button>
+        </div>
+    </div>
+    <input type="hidden" name="bc-tk" value="@ViewData["bc-tk"]" />
+    <input type="hidden" name="bc-cf" value="@ViewData["bc-cf"]" />
+    <input type="hidden" name="bc-dt" value="@ViewData["bc-dt"]" />
+</form>
+    </div>

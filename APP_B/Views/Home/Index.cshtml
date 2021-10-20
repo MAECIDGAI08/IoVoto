@@ -1,0 +1,332 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Http;
+@using System.Linq;
+@*@model AppB.Models.Comitato;*@
+@model AppB.Models.Lista;
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@{
+    //riceve la lista dal controller
+    var lista = ViewData["lista"];
+    // nome pdf
+    String filename = "~/PDF/COMITES-" + @ViewData["comitesName"].ToString() + ".pdf";
+    bool ExitVisible = ViewBag.Exit;
+    Layout = "_Layout";
+}
+@inject IViewLocalizer Localizer
+
+<div class="container">
+    @*contenitore viste di tipo single page application*@
+    <div class="row mt-0 pt-0">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 mx-0 px-0">
+                        @*start form multistep *@
+                        @inject IStringLocalizer<SharedResource> Localizer
+                        <form method="POST" id="register-form" class="msform" asp-controller="Home" asp-action="SetVoto2">
+                            <div class="look mb-5">
+                                <ul id="progressbar">
+                                    <li class="judge active first-li" style="width:25%;" tabindex="0" title="Sezione Validation Number"><span class="pb">@Localizer["UI-PB1"]</span></li>
+                                    <li class="personal" style="width:25%;" tabindex="0" title="Sezione Lista dei Com.It.Es"><span class="pb">@Localizer["UI-PB2"]</span></li>
+                                    <li class="security" style="width:25%;" tabindex="0" title="Sezione Lista dei Candidati per la Lista selezionata"><span class="pb">@Localizer["UI-PB3"]</span></li>
+                                    <li class="checklist last-li" style="width:25%;" tabindex="0" title="Sezione Riepilogo e conferma del Voto"><span class="pb">@Localizer["UI-PB4"]</span></li>
+                                </ul>
+                            </div>
+                            <hr />
+                            @* il tag fieldset suddivide la vista in un form multiSteps *@
+                            @* modulo Validation Number *@
+                            <fieldset id="msform-field-1">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="look">
+                                            <div class="alert alert-secondary text-left" role="alert">
+                                                <i class="fa fa-info-circle fa-3x fa-pull-left mae" aria-hidden="true"></i> @Localizer["FS1-Sx"]
+                                                <span class="VN">
+                                                    @Context.Session.GetString("_VN")
+
+                                                </span>
+                                                @Localizer["FS1-SxB"] <span class="VN">@ViewData["TempoSessione"]</span> @Localizer["FS1-SxC"]
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <div class="look">
+                                            <div class="alert alert-light text-left mae" role="alert">
+                                                <i class="fa fa-info-circle fa-3x fa-pull-left mae" aria-hidden="true"></i>
+                                                @Localizer["Help5"]
+                                            </div>
+                                            @Html.ActionLink("scarica il pdf", "GetPdfCOMITES", "Home", new { filename }, new { @class = "pc-button pc-button-blue text-center text-uppercase", @title = @Localizer["UI-Scarica-Titolo"], @target = "_blank" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <a id="ajax-liste-trigger" class="pc-button pc-button-blue text-uppercase next" title="@Localizer["UI-F-Title"]" data-form="register-form" href="javascript:void(0);">@Localizer["UI-F"]</a>
+                            </fieldset> @* fine fieldset-1*@
+                            @* modulo Liste Partiti *@
+                        <fieldset id="msform-field-2">
+                            <p>
+                                <h4 id="titleList">@Localizer["FS2-Ct1"]</h4>
+                                <h4 id="titleWhite" class="riepilogoDatiHide">@Localizer["FS2-Ct3"]</h4>
+                            </p>
+                            @*start liste*@
+                            <div class="row">
+                                <div class="col-sm-2 col-md-2 col-lg-2"></div>
+                                <div id="boxliste" class="look bg-light col-sm-8 col-md-8 col-lg-8 pt-2 pb-2">
+                                    <div>
+                                        <table class="table test table-borderless table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+                                            @foreach (var item in lista as IEnumerable<AppB.Models.Lista>)
+                                            {
+                                                <tr>
+                                                    <td class="text-center justify-content-center test">
+                                                        <img id='imgLista[@item.ordine]' class='imgListe' src="~/Liste/@Context.Session.GetString("_Comites")/@item.imageUrl" />
+                                                        <input type='radio' id='@item.ordine' name='Partito' value='@item.Name' class='Radio-Input' onclick='$("#radioListe").val(1); $("#radioListeSelect").val("@(item.Name)");' autocomplete="off" />
+                                                        <label for='inpLista[@item.ordine]' class='Radio liste'>@item.Name</label>
+                                                    </td>
+                                                    <td class="invisible" style="display:none;">@(ViewData["maxSel"] = item.MaxSel);</td>
+                                                </tr>
+
+                                            }
+                                        </table>
+                                        <script>
+                                            /*$("#1").attr('checked', true).val(1);*/
+                                            /*$("#1").val(1);*/
+                                        </script>
+
+                                        @*cicla l'oggetto lista ricevuto dal viewdata contenente le liste e genera l'html*@
+                                    </div>
+                                    <script type="text/javascript">
+                                        const gino = '@ViewData["maxSel"]';
+                                    </script>
+                                    <!-- viene settato ad uno per superare la validazione -->
+                                    <p class="mt-2"><a href="javascript:void(0);" id="btnSchedaBianca" onclick="opzioniVoto('btnSchedaBianca'); pulisciradio();" title="@Localizer["UI-WhiteVote-Title"]" class="pc-button pc-button-grey text-uppercase text-center" data-form="">@Localizer["UI-WhiteVote"]</a></p>
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2"></div>
+                            </div>
+                            @*<input id="radioListe" class="required" type="hidden" value="" />*@
+                            <input id="radioListeSelect" type="hidden" value="" />
+                            <span id="er" class="error">@Localizer["FS-Error1"]</span>
+                            @*end liste*@
+                            <div class="row">
+                                <div class="col-sm-2 col-md-2 col-lg-2"></div>
+                                <div class="col-sm-8 col-md-8 col-lg-8 mt-8" id="comandiSchede">
+                                    <div class="look">
+                                        <p class="alert alert-secondary text-left mae" role="alert">
+                                            <i class="fa fa-info-circle fa-3x fa-pull-left mae" aria-hidden="true"></i>
+                                            @Localizer["FS2-Dx1"]
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2"></div>
+                                <div id="boxWhiteCard" class="riepilogoDatiHide">
+                                    @* start div scheda bianca*@
+                                    <div class="row">
+                                        <div class="col-sm-5 col-md-4 col-lg-4 col-xl-4">
+                                            @*<div class="look">
+                            <p class="alert alert-info text-left" role="alert">
+                                <i class="fa fa-info-circle fa-3x fa-pull-left mae" aria-hidden="true"></i>
+                                @Localizer["FS2-Sx2"]
+                            </p>
+                        </div>*@
+                                            <p class="alert alert-secondary mae" role="alert">
+                                                <i class="fa fa-info-circle fa-2x fa-pull-left mae" aria-hidden="true"></i>
+                                                Clicca su INDIETRO per tornare alla selezione della lista.
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                            @* campo scheda bianca da controllare nel metodo setVoto *@
+                                            <input type="hidden" id="confirmWhiteCard" value="0" />
+                                            <div id="comandiListe" class="list-inline">
+                                                <a href="javascript:void(0);" onclick="opzioniVoto('btnSchedaBiancaNull');" title="@Localizer["UI-B-TitleB"]" class="pc-button pc-button-grey text-uppercase text-center" id="btnCancelWhiteCard">@Localizer["UI-B"]</a>
+                                                <!--<a href="javascript:void(0);" class="pc-button pc-button-blue text-center nextwosteps" id="btnContinueWhiteCard" onclick="return riepilogo('schedaBianca');">CONFERMA</a>-->
+
+                                                <a href="javascript:void(0);" class="pc-button pc-button-blue text-center text-uppercase nextTwoSteps" onclick='$("#radioListe").val(1); $("#confirmWhiteCard").val(1); return Riepilogo("schedaBianca");' title="@Localizer["UI-F-TitleB"]" id="btnContinueWhiteCard">@Localizer["UI-F"]</a>
+                                                @*setto la scheda bianca come attiva*@
+                                                <a id="ajax-btnContinueWhiteCard-trigger" class="pc-button pc-button-blue text-uppercase nextTwoSteps" data-form="register-form" href="javascript:void(0);" title="@Localizer["UI-F-TitleB"]" style="display:none;">@Localizer["UI-F"]</a>
+                                                @*  *@
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
+                                            @*<div class="look">
+                            <p class="alert alert-info text-left" role="alert">
+                                <i class="fa fa-info-circle fa-3x fa-pull-left mae" aria-hidden="true"></i>
+                                @Localizer["FS2-Dx2"]
+                            </p>
+                        </div>*@
+                                            <p class="alert alert-primary mae" role="alert">
+                                                <i class="fa fa-info-circle fa-2x fa-pull-left mae" aria-hidden="true"></i>
+                                                Clicca su AVANTI per proseguire nel processo.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*end div scheda bianca*@
+                            </div>
+                            @*start btn navigazione*@
+                            <a id="back" class="pc-button pc-button-grey text-uppercase previous" data-form="register-form" title="@Localizer["UI-B-Title"]" href="javascript:void(0);">@Localizer["UI-B"]</a>
+                            
+                            @*<a id="ajax-candidati-check" class="pc-button pc-button-blue text-uppercase" href="javascript:void(0);" title="@Localizer["UI-F-Title"]"
+        onclick="if (validateForm('msform-field-2')) { ajaxCheck('ajax-candidati', 'GetListaCandidati?lista=' + $('#radioListeSelect').val(), true); } $('#radioListe').val(1);">@Localizer["UI-F"]</a>*@
+
+                            <a id="ajax-candidati-check" class="pc-button pc-button-blue text-uppercase" href="javascript:void(0);" title="@Localizer["UI-F-Title"]"
+                               onclick="if (validateForm('msform-field-2') && $('input[name=Partito]:checked').val()) { ajaxCheck('ajax-candidati', 'GetListaCandidati?lista=' + $('#radioListeSelect').val(), true); } else alert('Prego selezionare una lista dall\'elenco per continuare con la scelta dei candidati')">@Localizer["UI-F"]</a>
+
+                            
+                           
+
+                            <div id="ajax-candidati-loader" class="before-submit-loader" style="display:none;"><img src="~/img/loader.GIF" alt="" /></div>
+                            <a id="ajax-candidati-trigger" class="pc-button pc-button-blue text-uppercase next" title="@Localizer["UI-F-Title"]" data-form="register-form" href="javascript:void(0);" style="display:none;">@Localizer["UI-F"]</a>
+                            <div class="row">
+                                <div class="col-sm-2 col-md-2 col-lg-2 mt-2"></div>
+                                <div class="col-sm-4 col-md-4 col-lg-4 mt-4" id="boxInfoNextNavigation">
+                                    <div class="look">
+                                        <p class="alert alert-secondary mae" role="alert">
+                                            <i class="fa fa-info-circle fa-2x fa-pull-left mae" aria-hidden="true"></i>
+                                            Clicca su INDIETRO per tornare al Manifesto Elettorale.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-lg-4 mt-4" id="boxInfoBackNavigation">
+                                    <div class="look">
+                                        <p class="alert alert-primary mae" role="alert">
+                                            <i class="fa fa-info-circle fa-2x fa-pull-left mae" aria-hidden="true"></i>
+                                            Clicca su AVANTI per proseguire nel processo.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2 mt-2" id="comandiSchede"></div>
+                            </div>
+                            @*end btn navigazione*@
+                        </fieldset>
+                            @*modulo lista candidati*@
+                            <fieldset id="msform-field-3">
+                                <span id="sceglicandidati">@Localizer["FS3-Ct1"]&nbsp;@ViewData["maxSel"]&nbsp;@Localizer["FS3-Ct2"]<br />@Localizer["FS3-Ct3"]</span>
+                                <span id="boxListaPag"></span>
+                                <div class="row">
+                                    <div class="col-sm-2 col-md-2 col-lg-2"></div>
+                                    <div class="bg-light look col-sm-8 col-md-8 col-lg-8 mt-3">
+                                        <table class="table table-bordered table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-hover">
+                                            <tr>
+                                                <th scope="col"><i class="fa fa-list" aria-hidden="true"></i></th>
+                                                <th scope="col">@Localizer["FS3-TH-nomeECognome"]</th>
+                                                <th scope="col">@Localizer["FS3-TH-dataNascita"]</th>
+                                                <th scope="col">@Localizer["FS3-TH-LuogoNascita"]</th>
+                                            </tr>
+                                            <tbody id="ajax-candidati-target">
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2"></div>
+                                </div>
+                                <span id="er" class="error">@Localizer["FS-Error2"]</span>
+
+
+                                <a id="returnToList" data-value="clearFields" class="pc-button pc-button-grey text-uppercase previous" title="@Localizer["UI-B-TitleC"]" data-form="register-form" href="javascript:void(0);">@Localizer["UI-B"]</a>
+                              
+                                <a id="ajax-btnLista-check" class="pc-button pc-button-blue text-uppercase next" href="javascript:void(0);" title="@Localizer["UI-F-TitleC"]"
+                                   onclick="return Riepilogo('datiVoto');">@Localizer["UI-F"]</a>
+                                <div id="ajax-btnLista-loader" class="before-submit-loader" style="display:none;"><img src="~/img/loader.GIF" alt="" /></div>
+                                <a id="ajax-btnLista-trigger" class="pc-button pc-button-blue next" href="javascript:void(0);" style="display:none;">@Localizer["UI-F"]</a>
+
+
+                                <div class="row">
+                                    <div class="col-sm-11 col-md-1 col-lg-1 mt-1"></div>
+                                    <div class="col-sm-5 col-md-5 col-lg-5 mt-5">
+                                        <div class="look">
+                                            <p class="alert alert-secondary mae" role="alert">
+                                                <i class="fa fa-info-circle fa-2x fa-pull-left mae" aria-hidden="true"></i>
+                                                Clicca su INDIETRO per tornare alla scelta della lista / scheda bianca.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-md-5 col-lg-5 mt-5">
+                                        <div class="look">
+                                            <p class="alert alert-primary mae" role="alert">
+                                                <i class="fa fa-info-circle fa-2x fa-pull-left mae" aria-hidden="true"></i>
+                                                Clicca su AVANTI per proseguire nel processo.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 col-md-1 col-lg-1 mt-1"></div>
+                                </div>
+                            </fieldset>
+                            @*modulo lista riepilogo*@
+                            <fieldset id="msform-field-4">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
+                                        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 text-center">
+                                            <div id="fs-four-votoUfficiale" class="lookC VotoGood">
+                                                <i class="fa fa-check-square fa-3x fa-pull-left"></i>
+
+                                                <h1 class="Voto">@Localizer["FS4-Ct1"]</h1>
+                                                <hr />
+                                                <span id="testoA">@Localizer["FS4-Ct10"]</span><hr />
+                                                <div align="center">
+                                                    <h4 id='Candi'>@Localizer["FS4-Ct4"]</h4>
+                                                    <h4 id='NoCandi'>@Localizer["FS4-N-Ct4"]</h4>
+                                                </div>
+                                                <table class="table table-hover table-bordered table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl" id="tabellaRiepilogo">
+                                                    <tr>
+                                                        <th scope="col">@Localizer["FS3-TH-nomeECognome"]</th>
+                                                        <th scope="col">@Localizer["FS3-TH-dataNascita"]</th>
+                                                        <th scope="col">@Localizer["FS3-TH-LuogoNascita"]</th>
+                                                    </tr>
+                                                    <tbody id="datiRiepilogo">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            @*start riepilogo scheda bianca*@
+                                            <div id="fs-four-boxWhiteCard" class="lookC pb-4">
+                                                @{
+                                                    <partial name="SchedaBianca" />
+                                                }
+                                            </div>
+                                            @*end riepilogo scheda bianca*@
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
+                                    </div>
+                                    <div class="row mt-0 pt-0">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 mt-5 mb-5">
+                                            <div id="AvvisoFinale" class="look">
+                                                <div class="alert alert-primary text-justify">
+                                                    <i class="fa fa-exclamation fa-3x fa-pull-left " aria-hidden="true"></i>
+                                                    <h3>@Localizer["FS4-Ct2"]</h3>
+                                                </div>
+                                            </div>
+                                            <a id="btnRiepilogo" data-form="register-form" href="javascript:void(0);" class="pc-button pc-button-blue text-uppercase" onclick="$('#radioListe').val(0); twoback(); $('#datiRiepilogo').html('');" title="@Localizer["UI-B-TitleD"]">@Localizer["UI-B"]</a>&nbsp;
+                                            <a id="ConfermaVoto" href="javascript:void(0);" class="pc-button pc-button-blue text-uppercase" onclick="gameOver(0);" title="@Localizer["UI-Confirm2-Title"]"><i class="fa fa-lg fa-paper-plane-o" aria-hidden="true"></i> @Localizer["UI-Confirm2"]</a>
+
+                                            <div id="ConfermaFinale" class="look">
+                                                <i class="fa fa-question-circle fa-4x fa-pull-left" aria-hidden="true"></i> <h1 class="text-center">@Localizer["FS4-Conferma1"]</h1>
+                                                <hr />
+                                                <h3 class="text-left">@Localizer["FS4-Conferma2"]</h3>
+                                                <h3 class="text-left">@Localizer["FS4-Conferma3"]</h3>
+                                                <a id="ConfermaVotoDef" class="pc-button pc-button-green text-uppercase form-submit" data-form="register-form" title="@Localizer["UI-Si-Title"]"><i class="fa fa-lg fa-check-square" aria-hidden="true"></i> @Localizer["UI-Si"]</a>
+                                                @*<a id="ConfermaVotoNO" href="javascript:void(0);" class="pc-button pc-button-red text-uppercase" onclick="gameOver(1); $('#register-form').submit();" title="@Localizer["UI-No-Title"]"><i class="fa fa-lg fa-stop-circle-o" aria-hidden="true"></i> @Localizer["UI-No"]</a>*@
+                                                <a id="ConfermaVotoNO" href="javascript:void(0);" class="pc-button pc-button-red text-uppercase" onclick="gameOver(1);" title="@Localizer["UI-No-Title"]"><i class="fa fa-lg fa-stop-circle-o" aria-hidden="true"></i> @Localizer["UI-No"]</a>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*end riepilogo voto*@
+                                <!--  <input type="hidden" name="ValoreHiddenUtils" value="valore valore utile non usato" /> -->
+
+                            </fieldset>
+                        </form>
+                        @*end form multistep *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="javascript">
+    function preventBack() { window.history.forward(); }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () { null };
+</script>
+

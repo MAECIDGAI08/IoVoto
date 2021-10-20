@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IViewLocalizer Localizer
+@inject IStringLocalizer<SharedResource> Localizer
+@{
+    Layout = "_Layout";
+    //var chiaveUrl = ViewData["UrlAppA"];
+    var UrlLogout = Startup.StaticConfig.GetSection("UrlLogout").Value;
+}
+
+
+<div class="alert alert-danger text-center mt-5 mb-5">
+    <i class="fa fa-exclamation-triangle fa-5x fa-pull-left" aria-hidden="true"></i>
+    <h1>@Localizer["Help Sessione 1"]</h1>
+    <h3>@Localizer["Help Sessione 2"]</h3>
+    <h3>@Localizer["Help Sessione 3"]</h3>
+</div>
+<div class="text-center">
+    <a class="pc-button pc-button-blue mb-5" href="@UrlLogout" title="@Localizer["UI-Sessione-Titolo"]">@Localizer["UI-Sessione"] @Localizer["Sito-Nome"]</a>
+
+    <div id="ajax-liste-loader" class="before-submit-loader" style="display:none;"><img src="~/img/loader.GIF" alt="" /></div>
+    <a id="ajax-liste-trigger" class="pc-button pc-button-blue next" href="javascript:void(0);" style="display:none;">ACCEDI</a>
+</div>

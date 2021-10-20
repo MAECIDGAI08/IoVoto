@@ -1,5 +1,5 @@
 # IoVoto 
-Portale per la sperimentazione del voto elettronico degli italiani all'estero
+**Portale per la sperimentazione del voto elettronico degli italiani all'estero**
 
 Lo sviluppo del Portale Voto elettronico nasce dalla volontà di la volontà di fornire una soluzione che supporti lo svolgimento della sperimentazione del voto elettronico, in aggiunta agli strumenti già in uso, in occasione delle prossime elezioni COM.IT.ES. (Comitati degli italiani all’estero). La sperimentazione coinvolgerà alcune sedi pilota che saranno scelte dall’Amministrazione.
 

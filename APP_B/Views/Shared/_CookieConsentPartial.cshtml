@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+    ////ViewBag.1 = "";
+}
+
+@if (showBanner)
+{
+    <nav id="cookieConsent" class="navbar navbar-default navbar-fixed-top" role="alert">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#cookieConsent .navbar-collapse">
+                    @*<span class="sr-only">Toggle cookie consent banner</span>*@
+                    @*<span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>*@<i class="fa fa-info-circle" aria-hidden="true"></i> Informativa cookies del sito
+                </button>
+                @*<span class="navbar-brand"><i class="fa fa-info-circle" aria-hidden="true"></i></span>*@
+            </div>
+            <div class="collapse navbar-collapse">
+                <p class="navbar-text">
+                    E' Necessario accettare i cookie tecnici per poter usufruire delle funzionalità offerte dal sito.
+                </p>
+                <div class="navbar-right">
+                    <a asp-controller="Home" asp-action="Privacy" class="btn btn-info navbar-btn">Leggi i termini e le condizioni</a>
+                    <button type="button" class="btn btn-default navbar-btn" data-cookie-string="@cookieString">ACCETTO</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script>
+        (function () {
+            document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) {
+                document.cookie = el.target.dataset.cookieString;
+                document.querySelector("#cookieConsent").classList.add("hidden");
+            }, false);
+        })();
+    </script>
+}

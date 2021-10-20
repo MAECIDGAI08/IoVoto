@@ -1,0 +1,137 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IViewLocalizer Localizer
+@{
+    bool ExitVisible = ViewBag.Exit;
+}
+
+<!DOCTYPE html>
+<html lang="it-it">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Ministero Affari Esteri Servizi Consolari Online">
+    <meta name="copyright" content="Ministero Affari Esteri">
+    <meta name="title" content="Servizi Consolari Online">
+    <meta name="category" content="public, government">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, proxy-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+    <partial name="_Favicons" />
+    <title>@Localizer["Sito-Nome"] | @ViewData["Title"]</title>
+    <script src="~/lib/jquery/dist/jquery-351.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://kit.fontawesome.com/32496546a7.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/shared.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/addon.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,400i,600,600i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/0964c0b11f.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" language="javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
+
+    
+
+</head>
+@inject IStringLocalizer<SharedResource> Localizer
+<body>
+    @*<h1>Layout = "_Layout"</h1>*@
+    <partial name="_Header" />
+    @*<partial name="_CookieConsentPartial" />*@
+<div id="main-container" class="container">
+
+    @*@ExitVisible;*@
+    @if (ExitVisible == true)
+    {
+        <div class="col-md-12 mt-4 pb-0" id="Votazione">
+            <hr /><h2 class="text-center font-weight-bold"> @Localizer["Lay-Help1"]</h2>
+            <h2 class="text-center font-weight-bold" id="nomeComitato">
+
+                @{
+                    if (ViewData["comitesName"] != null)
+                    {
+                        @ViewData["comitesName"]
+                    }
+                }
+
+            </h2>
+            <h4 class="text-center mae">@Localizer["Lay-Help2"] @ViewData["FineVotazione"]</h4>
+            <hr />
+        </div>
+    }
+
+        <main class="pb-3">
+            <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirm-modal-header">&nbsp;</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="confirm-modal-body"></div>
+                        <div class="modal-footer">
+                            <a href="javascript:void(0);" class="pc-button pc-button-grey text-center" data-dismiss="modal">CHIUDI</a>
+                            <a href="javascript:void(0);" class="pc-button pc-button-green text-center" id="confirm-modal-confirm">PROCEDI</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="ajax-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div id="ajax-modal-loader" class="ajax-modal-loader"><img src="~/img/loader.GIF" alt="" /></div>
+                        <div id="ajax-modal-content" class="ajax-modal-content"></div>
+                    </div>
+                </div>
+            </div>
+            @RenderBody()
+            <a id="scroll" class="maeci-bk" href="javascript:void(0);"><i class="material-icons">keyboard_arrow_up</i></a>
+        </main>
+    </div>
+    <partial name="_Footer" />
+    <div id="alert-div" tabindex="-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-white text-center pt-3 pb-3">
+                    <a style="float:right;" href="javascript:void(0);" onclick="$('#alert-div').css('top','-300px');" tabindex="-1"><i class="material-icons text-secondary">close</i></a>
+                    <p id="alert-content"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery-351.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+        </script>       
+    </environment>
+    @RenderSection("Scripts", required: false)
+    <script>
+        function setlanguage(culture) {
+            document.getElementById("form-set-language-culture").value = culture;
+        document.getElementById("form-set-language").submit();
+}
+    </script>
+    </body>
+</html>

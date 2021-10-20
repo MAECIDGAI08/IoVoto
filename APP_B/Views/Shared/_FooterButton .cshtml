@@ -1,0 +1,7 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Localization
+@inject IViewLocalizer Localizer
+@inject IStringLocalizer<SharedResource> Localizer
+    <div class="text-center mb-3">
+        <a class="pc-button pc-button-blue text-uppercase" title="Torna alla procedura di voto" asp-controller="Home" asp-action="Index" aria-label="BackIndex"><i class="fa fa-lg fa-sign-out maeci" aria-hidden="true"></i>&nbsp;Torna al voto</a>
+    </div>

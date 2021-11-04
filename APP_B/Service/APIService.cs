@@ -60,6 +60,12 @@ namespace AppB.Service
               
         public static IRestResponse InvokeChaincodeParameters(string chainCodeName, string methodName, string Endpoint, string Username, params string[] parameters)
         {
+
+            Utility.Utils.LogTrace("InvokeChaincodeParameters", "InvokeChaincodeParameters data: " + chainCodeName);
+            Utility.Utils.LogTrace("InvokeChaincodeParameters", "InvokeChaincodeParameters data: " + methodName);
+            Utility.Utils.LogTrace("InvokeChaincodeParameters", "InvokeChaincodeParameters data: " + Endpoint);
+            Utility.Utils.LogTrace("InvokeChaincodeParameters", "InvokeChaincodeParameters data: " + Username);
+
             IRestResponse response = null;
 
             var client = new RestClient(Endpoint);
@@ -81,10 +87,14 @@ namespace AppB.Service
                 {
                     separator = ",";
                 }
-                variablePart += "\"" + parameters[i] + "\"" + separator;
+                variablePart += "\"" + parameters[i].Replace("'","''") + "\"" + separator;
             }
             body += variablePart + "], " + "\"timeout\": 18000, \"sync\" : true";
             body += "}";
+
+
+            Utility.Utils.LogTrace("InvokeChaincodeParameters", "InvokeChaincodeParameters data: " + body);
+
             request.AddParameter("application/json", body, ParameterType.RequestBody);
             //IRestResponse response = client.Execute(request);
             response = client.Execute(request);

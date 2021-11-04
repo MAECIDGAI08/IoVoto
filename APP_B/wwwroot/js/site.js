@@ -24,10 +24,13 @@ $(document).ready(function () {
             $('#' + current_fs.attr('id') + ' :input').removeClass("valid");
             $('#' + current_fs.attr('id') + ' :input').removeClass("invalid");
             //se viene verificata la condizione, il selettore eq() aggiunge la classe all'elemento li successivo con quell' id 
-            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(next_fs)).addClass("active").css("color", "green");
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(next_fs)).addClass("active");
             $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(next_fs)).focus();
-            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fs)).addClass("active").css("color", "blue");
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fs)).addClass("active");
             $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(previous_fs)).focus();
+
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fs)).removeClass("current-li");
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(next_fs)).addClass("current-li");
 
             next_fs.show();     //se true => veiene visualizzato il secondo fieldset
             current_fs.animate({ opacity: 0 }, {
@@ -44,16 +47,20 @@ $(document).ready(function () {
         }
     });
     $(".nextTwoSteps").click(function () {
-        current_fs = $(this).parent();  //assegno la var a tutti gli elementi padre (posizionati sopra) dell'elemento con la classe next  
+        current_fs = $("#msform-field-2");  //assegno la var a tutti gli elementi padre (posizionati sopra) dell'elemento con la classe next  
         next_fs = $("#msform-field-4");  //dichiaro e inizializzo la var con l'id del field4
+        mid_fs = $("#msform-field-3");  //dichiaro e inizializzo la var con l'id del field3
         if (validateForm(current_fs.attr('id'))) {
             //$('#' + current_fs.attr('id') + ' :input').removeClass("valid");
             //$('#' + current_fs.attr('id') + ' :input').removeClass("invalid");
             //se viene verificata la condizione, il selettore eq() aggiunge la classe all'elemento li successivo con quell' id 
-            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(next_fs)).addClass("active").css("color", "green");
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(next_fs)).addClass("active");
             $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(next_fs)).focus();
-            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fs)).addClass("active").css("color", "blue");
-            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(previous_fs)).focus();
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fs)).addClass("active");
+
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(next_fs)).addClass("current-li");
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(mid_fs)).addClass("active");
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fs)).removeClass("current-li");
 
             next_fs.show("#msform-field-4");     //se true => veiene visualizzato il quarto fieldset
             current_fs.animate({ opacity: 0 }, {
@@ -70,11 +77,13 @@ $(document).ready(function () {
         }
     });
     $(".previous").click(function () {
-        //$("#divRiepilogo").css({ "visibility": 'hidden', "display": 'none' })
+
         current_fs = $(this).parent();
         previous_fs = $(this).parent().prev();
-        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fs)).removeClass("active").css("color", "grey");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fs)).removeClass("active");
         $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(previous_fs)).focus();
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fs)).removeClass("current-li");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(previous_fs)).addClass("current-li");
         previous_fs.show();
         current_fs.animate({ opacity: 0 }, {
             step: function (now) {
@@ -153,8 +162,6 @@ function init() {
 
 function twoback() {
     var candidati = $('#confirmWhiteCard');
-    //$('#btnRiepilogo').removeClass("previous");
-    //$('#btnRiepilogo').removeClass("previousTwoSteps");
 
     if (candidati.val() == 1) {
 
@@ -163,6 +170,14 @@ function twoback() {
 
         current_fstwo = $("#msform-field-4");
         previous_fstwo = $("#msform-field-2");
+        mid_fstwo = $("#msform-field-3");
+
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fstwo)).removeClass("current-li");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fstwo)).removeClass("active");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(mid_fstwo)).removeClass("current-li");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(mid_fstwo)).removeClass("active");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(previous_fstwo)).addClass("current-li");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(previous_fstwo)).addClass("active");
 
         previous_fstwo.show("#msform-field-2");
         current_fstwo.animate({ opacity: 0 }, {
@@ -182,6 +197,7 @@ function twoback() {
         })
     }
     else {
+
         //prende tutte le checkbox del div con quell'id
         var checks = $("#ajax-candidati-target :checkbox");
         //cicla le checkbox
@@ -193,6 +209,11 @@ function twoback() {
         resetbox();
         current_fstwo = $("#msform-field-4");
         previous_fstwo = $("#msform-field-3");
+
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fstwo)).removeClass("current-li");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(current_fstwo)).removeClass("active");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(previous_fstwo)).addClass("current-li");
+        $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(previous_fstwo)).addClass("active");
 
         previous_fstwo.show("#msform-field-3");
         current_fstwo.animate({ opacity: 0 }, {
@@ -431,7 +452,7 @@ function Riepilogo(visualizza) {
             manage("fs-four-boxNullCard", "off");
             manage("boxNullCard", "off");
             $('#msform-field-2').hide();
-            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)", 3).index(next_fs)).addClass("active").css("color", "green");
+            $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)", 3).index(next_fs)).addClass("active");
             $("#progressbar li").eq($("fieldset:not(.ajax-modal-content fieldset)").index(3)).focus();
             break;
         default:

@@ -3,18 +3,18 @@
     text-rendering: optimizeLegibility;
 }
 
-@font-face {   
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-Black.ttf); 
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-Bold.ttf);
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-BoldItalic.ttf);
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-ExtraLight.ttf);
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-ExtraLightItalic.ttf);
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-Italic.ttf);
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-Light.ttf);
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-LightItalic.ttf);
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-Regular.ttf);
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-SemiBold.ttf);
-    src: url(../fonts/TitilliumWeb/TitilliumWeb-SemiBoldItalic.ttf);
+@font-face {
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-Black.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-Bold.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-BoldItalic.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-ExtraLight.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-ExtraLightItalic.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-Italic.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-Light.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-LightItalic.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-Regular.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-SemiBold.ttf);
+    src: url(../css/fonts/TitilliumWeb/TitilliumWeb-SemiBoldItalic.ttf);
 }
 
 html, body {

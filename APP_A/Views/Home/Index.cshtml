@@ -16,19 +16,50 @@
 @*<partial name="_Header_Index" />*@
 <div class="container">
     <div class="row">
-        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12">
-            <div id="carouselExampleSlidesOnly" class="carousel slide lookB mt-4 mb-4" data-ride="carousel">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div id="carouselExampleSlidesOnly" class="carousel slide mt-4 mb-4" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
+                                               
                         <img src="~/img/elections.png" class="imgTestata" />
-                        <h2 class="pt-2 font-weight-bold nero">@Localizer["Benvenuto1"]</h2>
+                         
                     </div>
+
                     <div class="carousel-item">
+
                         <img src="~/img/ballot.png" class="imgTestata" />
-                        <h2 class="pt-1 font-weight-bold nero">@Localizer["Benvenuto2"]</h2>
+                       
                     </div>
+
                 </div>
             </div>
+
+        </div>
+        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12">
+            <div id="carouselExampleSlidesOnly2" class="carousel slide mt-4 mb-4" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        @*<img src="~/img/elections.png" class="imgTestata img-fluid" />*@
+                        @*<img src="~/img/comiteselezioni.png" class="imgTestata1 img-fluid" />*@
+                        <h3 class="pt-1 font-weight-bold  nero">@Localizer["Benvenuto1"]</h3>
+                        <div class="carousel-caption">
+
+                        </div>
+                    </div>
+
+                    <div class="carousel-item">
+                        <h3 class="pt-1 font-weight-bold nero">@Localizer["Benvenuto2"]</h3>
+
+                        @*<img src="~/img/ballot.png" class="imgTestata img-fluid" />*@
+                        @*<img src="~/img/comiteselezioni.png" class="imgTestata1 img-fluid" />*@
+
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 myspid text-center">
             @if (SitoAperto == 0)
@@ -58,7 +89,7 @@
                     <h1>Debug: @debug</h1>
                     <ol>
                         <li>
-                            <a class="pc-button pc-button-blue form-submit" data-form="register-form" asp-controller="Home" title="@Localizer["UI-Leggi-Titolo"]" asp-action="FintoSpid">@Localizer["UI-Leggi"]</a>
+                            <a class="pc-button pc-button-blue form-submit" data-form="register-form" asp-controller="vaialvoto" title="@Localizer["UI-Leggi-Titolo"]" asp-action="Index">@Localizer["UI-Leggi"]</a>
                         </li>
                         <li>
                             <a class="pc-button pc-button-blue form-submit" data-form="register-form" asp-controller="Home" title="@Localizer["UI-Leggi-Titolo"]" asp-action="CodiceElettore">@Localizer["UI-Leggi"]</a>
@@ -105,4 +136,4 @@
             </div>
         </div>
     </div>
-    @*<partial name="_Footer" />*@
+</div>    

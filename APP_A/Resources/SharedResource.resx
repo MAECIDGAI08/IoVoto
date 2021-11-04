@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Acconsento" xml:space="preserve">
+    <value>Per poter proseguire è necessario accettare le condizioni relative al trattamento dei dati personali e della privacy.</value>
+  </data>
+  <data name="Benvenuto1" xml:space="preserve">
+    <value>Benvenuto al portale per la sperimentazione del voto digitale per le elezioni dei Comitati degli italiani all’estero – COM.IT.ES 2021</value>
+  </data>
+  <data name="Benvenuto2" xml:space="preserve">
+    <value>Il portale ti consente di partecipare alla prima sperimentazione del voto digitale</value>
+  </data>
+  <data name="Benvenuto4" xml:space="preserve">
+    <value>Benvenuto/a gentile utente</value>
+  </data>
+  <data name="Cabina" xml:space="preserve">
+    <value>Per entrare nella sezione di voto premere il pulsante</value>
+  </data>
+  <data name="Help CE Error" xml:space="preserve">
+    <value>Elettore non ammesso al voto. Per informazioni contattare l’Ufficio consolare</value>
+  </data>
+  <data name="Help Sessione 1" xml:space="preserve">
+    <value>Attenzione! Sessione scaduta per inattività dell'utente.</value>
+  </data>
+  <data name="Help Sessione 2" xml:space="preserve">
+    <value>La sessione di autenticazione è scaduta.</value>
+  </data>
+  <data name="Help Sessione 3" xml:space="preserve">
+    <value>Necessario eseguire nuovamente il processo di accesso.</value>
+  </data>
+  <data name="Help VN 1" xml:space="preserve">
+    <value>Per dare inizio al processo di voto, premere il pulsante copia utilizzando il pulsante apposito. Il validation number qui presente servirà per essere immesso nella schermata successiva.</value>
+  </data>
+  <data name="Help VN 2" xml:space="preserve">
+    <value>Il tuo validation Number è:</value>
+  </data>
+  <data name="Help VN 3" xml:space="preserve">
+    <value>Testo esplicativo Lorem ipsum  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</value>
+  </data>
+  <data name="Help1" xml:space="preserve">
+    <value>Per iniziare il processo di voto, è necessario autenticarsi con SPID, utilizzando le credenziali fornite dal proprio Identity Provider.</value>
+  </data>
+  <data name="Help2" xml:space="preserve">
+    <value>Effettuato il processo di autenticazione il portale verificherà la presenza dell'utente nella lista votanti. Ove necessario verrà richiesto l'inserimento del Codice Elettore</value>
+  </data>
+  <data name="Help3" xml:space="preserve">
+    <value>Sarà quindi possibile accedere alla sezione informativa successiva premendo il pulsante</value>
+  </data>
+  <data name="Help4" xml:space="preserve">
+    <value>La procedura di voto si svolgerà attraverso le seguenti fasi:</value>
+  </data>
+  <data name="Help5" xml:space="preserve">
+    <value>E' possibile prendere visione di tutte le liste elettorali presentate con  i nominativi dei candidati premendo sul pulsante</value>
+  </data>
+  <data name="Help6" xml:space="preserve">
+    <value>Sei ammesso alla sperimentazione del voto digitale per il rinnovo del COM.IT.ES di </value>
+  </data>
+  <data name="HelpCE1" xml:space="preserve">
+    <value>Inserisci il tuo CODICE ELETTORE</value>
+  </data>
+  <data name="HelpCE2" xml:space="preserve">
+    <value>reperibile sul certificato elettorale cartaceo oppure sul portale fast-It</value>
+  </data>
+  <data name="Logout-CT1" xml:space="preserve">
+    <value>Gentile elettore, avendo premuto il pulsante esci hai interrotto il processo di voto.</value>
+  </data>
+  <data name="Logout-CT2" xml:space="preserve">
+    <value>Le scelte effettuate finora  nella cabina elettorale digitale non sono state registrate (a tutela della tua privacy di voto).</value>
+  </data>
+  <data name="Logout-CT3" xml:space="preserve">
+    <value>Puoi effettuare nuovamente tutto il processo di autenticazione premendo sul pulsante sottostante</value>
+  </data>
+  <data name="Prova" xml:space="preserve">
+    <value>Prova ITA SHARED</value>
+  </data>
+  <data name="Sito-Nome" xml:space="preserve">
+    <value>IOvoto</value>
+  </data>
+  <data name="Sito-SottotitoloA" xml:space="preserve">
+    <value>Portale per la sperimentazione del voto digitale</value>
+  </data>
+  <data name="Sito-SottotitoloB" xml:space="preserve">
+    <value>COMITES</value>
+  </data>
+  <data name="TimeOver-CT1" xml:space="preserve">
+    <value>Gentile elettore, il tempo utile per la votazione sul portale per il Comites di </value>
+  </data>
+  <data name="TimeOver-CT2" xml:space="preserve">
+    <value>è scaduto.</value>
+  </data>
+  <data name="TimeOver-CT3" xml:space="preserve">
+    <value>Grazie per la tua adesione alla sperimentazione del voto digitale!</value>
+  </data>
+  <data name="UI-Chiudi-DivCodice-Elettore" xml:space="preserve">
+    <value>Clicca per chiudere l'esempio</value>
+  </data>
+  <data name="UI-Codice-Elettore" xml:space="preserve">
+    <value>conferma</value>
+  </data>
+  <data name="UI-Codice-Elettore-Titolo" xml:space="preserve">
+    <value>Premi conferma per proseguire</value>
+  </data>
+  <data name="UI-Copia" xml:space="preserve">
+    <value>Copia</value>
+  </data>
+  <data name="UI-Esci" xml:space="preserve">
+    <value>esci</value>
+  </data>
+  <data name="UI-Esci-Title" xml:space="preserve">
+    <value>Premi questo pulsante per uscire dalla procedura di voto</value>
+  </data>
+  <data name="UI-Esempio-Codice-Elettore" xml:space="preserve">
+    <value>Clicca per vedere l'inserimento del codice </value>
+  </data>
+  <data name="UI-Input-PH" xml:space="preserve">
+    <value>Immettere il proprio codice elettore qui</value>
+  </data>
+  <data name="UI-Input-Titolo" xml:space="preserve">
+    <value>Inserire il Codice Elettore</value>
+  </data>
+  <data name="UI-Leggi" xml:space="preserve">
+    <value>(fake navigation)</value>
+  </data>
+  <data name="UI-Leggi-Titolo" xml:space="preserve">
+    <value>Premi questo pulsante per visualizzare le istruzioni per la votazione</value>
+  </data>
+  <data name="UI-Scarica" xml:space="preserve">
+    <value>Scarica il pdf</value>
+  </data>
+  <data name="UI-Scarica-Titolo" xml:space="preserve">
+    <value>Premi questo pulsante per scaricare il pdf contenente liste e candidati</value>
+  </data>
+  <data name="UI-Sessione" xml:space="preserve">
+    <value>Torna alla pagina iniziale</value>
+  </data>
+  <data name="UI-Sessione-Titolo" xml:space="preserve">
+    <value>Torna alla pagina iniziale</value>
+  </data>
+  <data name="UI-Vai" xml:space="preserve">
+    <value>vai al voto</value>
+  </data>
+  <data name="UI-Vai-Titolo" xml:space="preserve">
+    <value>Premi questo pulsante per accedere alla prossima sezione della votazione</value>
+  </data>
+  <data name="UI-link-PH" xml:space="preserve">
+    <value>Vedi l' esempio</value>
+  </data>
+  <data name="Voto1" xml:space="preserve">
+    <value>A) INGRESSO NELLA CABINA ELETTORALE VIRTUALE: Cliccando sul pulsante VAI AL VOTO, in fondo a questa pagina, si accede alla cabina elettorale. Sarà possibile scaricare il manifesto elettorale contenente tutte le liste ammesse al voto con i relativi candidati per il Com.It.Es di appartenenza. Sarà inoltre visualizzato il proprio codice di convalida, generato automaticamente dal sistema. Questo codice garantirà la segretezza del voto. Per completare le operazioni di voto saranno a disposizione 30 minuti di tempo, superati i quali sarà necessario effettuare un nuovo accesso al portale.</value>
+  </data>
+  <data name="Voto2" xml:space="preserve">
+    <value>B) ESPRESSIONE DI VOTO: Per esprimere il proprio voto di lista si dovrà selezionare la lista prescelta. Successivamente, per esprimere eventuali voti di preferenza, sarà possibile selezionare i candidati nell’ambito della medesima lista. Qualora non si voglia esprimere un voto a favore di una lista di candidati, si potrà selezionare la scheda bianca. In questo modo il tuo voto non verrà attribuito ad alcuna lista.</value>
+  </data>
+  <data name="Voto2-A" xml:space="preserve">
+    <value>I) Selezione di una lista dall'elenco delle liste del proprio Com.It.Es di appartenenza</value>
+  </data>
+  <data name="Voto2-B" xml:space="preserve">
+    <value>II) Selezione di una preferenza espressa come scheda bianca (in questo caso non sarà possibile esprimere una preferenza nella sezione relativa ai candidati).</value>
+  </data>
+  <data name="Voto2-C" xml:space="preserve">
+    <value>III) Selezione di una preferenza espressa come voto nullo (anche in questo caso non sarà possibile esprimere una preferenza nella sezione relativa ai candidati).</value>
+  </data>
+  <data name="Voto3" xml:space="preserve">
+    <value>C) RIEPILOGO E CONFERMA DEL VOTO: In questa fase si potrà visualizzare il voto espresso. Sarà possibile o confermare definitivamente la propria scelta e finalizzare la procedura di voto oppure tornare indietro e modificare il proprio voto. Nessuna informazione verrà memorizzata finché il voto non sarà confermato.</value>
+  </data>
+  <data name="Voto4" xml:space="preserve">
+    <value>D) Riepilogo delle selezioni precedenti, con la possibilità di finalizzare la votazione oppure di tornare alla selezione della lista e ripetere il processo. Una volta confermato, il voto sarà definitivo e non potrà più essere modificato</value>
+  </data>
+  <data name="Voto5" xml:space="preserve">
+    <value>Dopo aver confermato il voto sarà possibile scaricare la ricevuta facendo nuovamente accesso al portale</value>
+  </data>
+</root>

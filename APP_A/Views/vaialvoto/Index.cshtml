@@ -36,22 +36,25 @@
                 <input type="hidden" name="param_001" value="" />
                 <input type="hidden" name="param_002" value="" />
                 <input type="hidden" name="param_003" value="" />
-                <div class="text-center mt-2">
+                <div class="text-center mt-2 mb-5">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
-                            <input type="checkbox" id="CheckVoto">
+                            <input type="checkbox" id="CheckVoto" onclick="prosegui();">
                         </div>
-                        <label class="form-check-label">&nbsp;@Localizer["Acconsento"]</label>
+                        <div id="InfoConsenso"><p>Per poter proseguire è <u>necessario</u> accettare le <a asp-controller="vaialvoto" asp-action="InformativaDatiPersonali" title="Informativa sui dati personali e della privacy"> condizioni relative al trattamento dei dati personali e della privacy</a></p></div>
+
+                        @*<label class="form-check-label">&nbsp;@Localizer["Acconsento"]</label>*@
+
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
     </div>
-    <div class="row">
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-2"></div>
-        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center mt-2">
-            <a href="@ViewData["URL"]" class="pc-button pc-button-blue text-center text-uppercase" id="VaiAlVoto" title="@Localizer["UI-Vai-Titolo"]"><i class="fa fa-external-link fa-fw" aria-hidden="true"></i> @Localizer["UI-Vai"] </a>
+    <div class="row mt-2 mb-2">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"></div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 text-center">
+            <a href="@ViewData["URL"]" class="pc-button pc-button-blue text-center text-uppercase hidden" id="VaiAlVoto" title="@Localizer["UI-Vai-Titolo"]"><i class="fa fa-external-link fa-fw" aria-hidden="true"></i> @Localizer["UI-Vai"] </a>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4"></div>
     </div>

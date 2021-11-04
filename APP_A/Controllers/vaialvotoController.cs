@@ -84,12 +84,12 @@ namespace AppA.Controllers
 
         public IActionResult Index()
         {
-            Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "VAIALVOTO info: incoming call to Vaialvoto");
+            Utils.LogTrace(Request.Headers["X-Forwarded-For"], "VAIALVOTO info: incoming call to Vaialvoto");
 
             //LOG HEADER DATA
             foreach (var header in Request.Headers)
             {
-                Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "VAIALVOTO header key: " + header.Key.ToString() + " -> " + header.Value.ToString());
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "VAIALVOTO header key: " + header.Key.ToString() + " -> " + header.Value.ToString());
             }
 
             try
@@ -100,12 +100,12 @@ namespace AppA.Controllers
 
                 if (String.IsNullOrEmpty(codiceElettore))
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "VAIALVOTO issue: empty codiceElettore");
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "VAIALVOTO issue: empty codiceElettore");
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
                 if (String.IsNullOrEmpty(dataNascita))
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "VAIALVOTO issue: empty dateOfBirth");
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "VAIALVOTO issue: empty dateOfBirth");
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
@@ -114,25 +114,25 @@ namespace AppA.Controllers
                 Elettore elettore = Elettore.parseElettoreFromJSON(queryIn.Content);
                 if (!string.IsNullOrEmpty(elettore.ErrorDescription) || string.IsNullOrEmpty(elettore.CodiceElettore))
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "VAIALVOTO issue: codiceElettore " + codiceElettore + " not found");
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "VAIALVOTO issue: codiceElettore " + codiceElettore + " not found");
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
                 /*QUI L'UTENTE PUO ESSERE AUTENTICATO ANCHE LATO APPLICATIVO*/
                 HttpContext.Session.SetString(SessionKeyLogged, "1");
 
-                User user = new User() { UserIP = HttpContext.Connection.RemoteIpAddress.ToString(), UserName = CreaGUID() };
+                User user = new User() { UserIP = Request.Headers["X-Forwarded-For"], UserName = CreaGUID() };
 
 
                 // controllo se l'utente sta nella timezone data dal comites
 
-                var queryInElettoriperRicevuta = APIService.InvokeChainCode("Elettori", "getFullElettori", codiceElettore, "", dataNascita);
-
-                Elettore elettoreRicevuta = Elettore.parseElettoreFromJSON(queryIn.Content);
+                var queryInElettoriperRicevuta = Service.APIService.InvokeChainCode("voters", "Elettori", "getFullElettori", "", codiceElettore, dataNascita);
+                
+                Elettore elettoreRicevuta = Elettore.parseElettoreFromJSON(queryInElettoriperRicevuta.Content);
                 if (!string.IsNullOrEmpty(elettore.ErrorDescription))
                 {
                     _logger.LogInformation(UteLogNam + UtenteGenerico() + UteBloCha + elettore.ErrorDescription);
-                    return RedirectToAction("Errore");
+                    return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
                 //dati elettore in sessione
@@ -163,7 +163,7 @@ namespace AppA.Controllers
                 if (string.IsNullOrEmpty(timezone.ErrorDescription.ToString()))
                 {
                     _logger.LogInformation(UteLogNam + UtenteGenerico() + UteBloCha + timezone.ErrorDescription);
-                    return RedirectToAction("Errore");
+                    return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
                 // test
@@ -202,14 +202,14 @@ namespace AppA.Controllers
                 if (!string.IsNullOrEmpty(number.ErrorDescription))
                 {
                     _logger.LogInformation(UteLogNam + UtenteGenerico() + UteBloCha + number.ErrorDescription);
-                    return RedirectToAction("Errore");
+                    return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
                 // Se l'utente ha votato, lo redirigo alla ricevuta di voto
                 if (number.Used == true)
                 {
                     _logger.LogInformation(UteLogNam + UtenteGenerico() + UteBloCha + "USED VALIDATION NUMBER");
-                    return RedirectToAction("RicevutadiVoto");
+                    return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/vaialvoto/RicevutaDiVoto");
                 }
                               
                 // Se il VN non è stato ancora creato viene scritto adesso
@@ -221,7 +221,7 @@ namespace AppA.Controllers
                     if (!string.IsNullOrEmpty(number_2.ErrorDescription))
                     {
                         _logger.LogInformation(UteLogNam + UtenteGenerico() + UteBloCha + number_2.ErrorDescription);
-                        return RedirectToAction("Errore");
+                        return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                     }
 
                 }
@@ -231,21 +231,186 @@ namespace AppA.Controllers
 
                 /*ALIMENTARE CON ALTRE COSE NECESSARIE************************/
 
-                Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "VAIALVOTO action: redirecting to View");
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "VAIALVOTO action: redirecting to View");
 				ViewData["URL"]= Startup.StaticConfig.GetSection("AppB_URL").Value;
                 ViewBag.Exit = true;
+                ViewData["Title"] = "Vai al voto";
                 return View();
 
             }
             catch (Exception e)
             {
-                Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "VAIALVOTO issue: " + e.Message);
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "VAIALVOTO issue: " + e.Message);
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
         }
 
-        
+        public IActionResult RicevutadiVoto()
+        {
+            ViewBag.Exit = true;
+            ViewData["Title"] = "Ricevuta di voto";
+            //_logger.LogInformation("UTENTE: accesso alla pagina RicevutadiVoto");
+            _logger.LogInformation(UteLogNam + UtenteGenerico() + UteLogDo + " RICEVUTADIVOTO");
 
+            Utils.LogTrace(Request.Headers["X-Forwarded-For"], "RICEVUTADIVOTO info: incoming call to RICEVUTADIVOTO");
 
+            foreach (var header in Request.Headers)
+            {
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "RICEVUTADIVOTO header key: " + header.Key.ToString() + " -> " + header.Value.ToString());
+            }
+
+            //LOG HEADER DATA            
+            try
+                {
+                // GET & CHECK IDCS1 DATA
+                    string codiceElettore = Request.Headers["codice_elettore"];
+                string dataNascita = Request.Headers["data_nascita"];
+
+                if (String.IsNullOrEmpty(codiceElettore))
+                {
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "RICEVUTADIVOTO issue: empty codiceElettore");
+                    return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+                }
+                if (String.IsNullOrEmpty(dataNascita))
+                {
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "RICEVUTADIVOTO issue: empty dateOfBirth");
+                    return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+                }
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "RICEVUTADIVOTO issue: " + e.Message);
+                return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+            }
+            
+        }
+
+        public IActionResult InformativaDatiPersonali()
+        {
+            ViewBag.Exit = true;
+            return View();
+        }
+        public IActionResult StampaRicevutaDiVoto()
+        {
+            Utils.LogTrace(Request.Headers["X-Forwarded-For"], "STAMPARICEVUTADIVOTO info: incoming call to STAMPARICEVUTADIVOTO");
+
+            foreach (var header in Request.Headers)
+            {
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "STAMPARICEVUTADIVOTO header key: " + header.Key.ToString() + " -> " + header.Value.ToString());
+            }
+
+            try
+            {
+                string codiceElettore = Request.Headers["codice_elettore"];
+                string dataNascita = Request.Headers["data_nascita"];
+
+                if (String.IsNullOrEmpty(codiceElettore))
+                {
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "STAMPARICEVUTADIVOTO issue: empty codiceElettore");
+                    return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+                }
+                if (String.IsNullOrEmpty(dataNascita))
+                {
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "STAMPARICEVUTADIVOTO issue: empty dateOfBirth");
+                    return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+                }
+
+                // INIZIO STAMPA RICEVUTA DI VOTO
+
+                _logger.LogInformation(UteLogNam + UtenteGenerico() + UteLogDo + " StampaRicevutaDiVoto");
+
+                //passaggio dati elettore in viewdata per visualizzarli nella view
+                string qualeGenere = HttpContext.Session.GetString("_SessoUtente");
+                string sesso = variousServices.SignoreSignora(qualeGenere);
+                ViewData["sesso"] = sesso;
+
+                string soggettoricevuta = HttpContext.Session.GetString(SessionKeyNomeUtente) + " " + HttpContext.Session.GetString(SessionKeyCognomeUtente);
+                ViewData["soggetto"] = soggettoricevuta;
+                ViewData["luogoNascita"] = HttpContext.Session.GetString(SessionKeyLuogoNascitaUtente);
+                ViewData["dataNascita"] = HttpContext.Session.GetString(SessionKeyDataNascitaUtente);
+                ViewData["COMITES"] = HttpContext.Session.GetString(SessionKeyComitesUtente);
+
+                string absoluteurl = Startup.StaticConfig.GetSection("AppA_URL").Value;
+                string BSUri = "~/lib/bootstrap/css/bootstrap.min.css";
+
+                // Fuso orario locale           
+                DateTime dateNow = DateTime.Now;
+                string dataItalia = dateNow.ToString("d");
+                string oraItalia = dateNow.ToString("T");
+
+                // UTC
+                DateTime utcNow = DateTime.UtcNow;
+                string dataStampaUtc = utcNow.ToString();
+                // fine area dati
+
+                // tentativo di usare lo stream
+                var stream = env.WebRootFileProvider.GetFileInfo("img/LogoRepubblica.png").CreateReadStream();
+                Image image = Image.FromStream(stream);
+                Graphics graphics = Graphics.FromImage(image);
+
+                // Stringa generazione pagina          
+                string viewHtml = "<!DOCTYPE html>";
+                //viewHtml += "<html lang = \"it\" >";
+                //viewHtml += "<meta charset=\"UTF-8\" />";
+                viewHtml += "<meta http-equiv=\"Content-Type\" content=\"text/html; charset = utf-8\"/>";
+                viewHtml += "<head>";
+                viewHtml += "<link rel=\"stylesheet\" href=\"" + absoluteurl + "/css/shared.css\" />";
+                viewHtml += "<link rel=\"stylesheet\" href=\"" + absoluteurl + "/css/main.css\" />";
+                viewHtml += "</head>";
+                viewHtml += "<body>";
+                viewHtml += "<div class=\"pdf centro\">";
+                viewHtml += "<div id=\"Grid\" class=\"scatola centro\">";
+                viewHtml += "<div class=\"centro mt-3\" >";
+
+                viewHtml += "<img class=\"logoRep centro\" src=\"" + absoluteurl + "/img/LogoRepubblica.png \" width=\"100px;\" height=\"100px;\" />";
+                viewHtml += "</div>";
+                viewHtml += "<div class=\"centro mt-5 mb-5 \">";
+                viewHtml += "<h1 class=\"text-uppercase ufficiale\" style=\"text-align: center;\">RICEVUTA ELETTORALE</h1>";
+                viewHtml += "<h2 class=\"text-uppercase ufficiale\" style=\"text-align: center;\">ELEZIONI DEI COMITATI DEGLI ITALIANI ALL’ESTERO</h2>";
+                viewHtml += "</div>";
+                viewHtml += "<div class=\"ufficiale centro mt-4\">";
+                viewHtml += "<h3>si attesta che</h4>";
+                viewHtml += "</div>";
+                viewHtml += "<div class=\"ufficiale centro mt-3\">";
+                viewHtml += "<h4>" + " " + @ViewData["sesso"] + " " + @ViewData["soggetto"] + "</h5>";
+                viewHtml += "<h4> nato/a a " + @ViewData["luogoNascita"] + " il " + @ViewData["dataNascita"] + "</h5>";
+                viewHtml += "</div>";
+                viewHtml += "<div class=\"ufficiale centro mt-3 mb-4\">";
+                viewHtml += "<h4>ha espresso il suo voto elettronico sulla piattaforma " + _localizer["Sito-Nome"] + " per il COMITES di " + @ViewData["COMITES"] + ".</h5>";
+                viewHtml += "</div>";
+                viewHtml += "</div>";
+                viewHtml += "</div>";
+                viewHtml += "</body>";
+                viewHtml += "</html>";
+
+                Byte[] res = null;
+
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    string testStylesheet = BSUri;
+                    var cssData = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.ParseStyleSheet(testStylesheet, true);
+                    var pdf = PdfGenerator.GeneratePdf(viewHtml, PdfSharp.PageSize.A4, 20, cssData);
+                    pdf.Save(ms);
+                    res = ms.ToArray();
+                }
+                System.Net.Mime.ContentDisposition cd = new System.Net.Mime.ContentDisposition
+                {
+                    FileName = "Portale " + _localizer["Sito-Nome"] + " Ricevuta di voto emessa il " + dataItalia + " alle " + oraItalia + ".pdf",
+                    Inline = true
+                };
+                Response.Headers.Add("Content-Disposition", cd.ToString());
+                Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                //return new FileContentResult(res, "application/pdf");
+                return new FileContentResult(res, "application/octet-stream");
+            }
+            catch (Exception e)
+            {
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "STAMPARICEVUTADIVOTO issue: " + e.Message);
+                return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+            }            
+        }
     }
 }

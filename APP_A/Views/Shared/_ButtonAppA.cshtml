@@ -4,7 +4,7 @@
 @inject IViewLocalizer Localizer
 @inject IStringLocalizer<SharedResource> Localizer
 @{
-    var UrlAppA = ViewData["UrlLogout"];
+    var UrlAppA = Startup.StaticConfig.GetSection("AppA_URL").Value.ToString();
 }
 
 <div class="text-center">

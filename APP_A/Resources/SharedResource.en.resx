@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Acconsento" xml:space="preserve">
+    <value>Acconsento EN</value>
+  </data>
+  <data name="Benvenuto1" xml:space="preserve">
+    <value>Benvenuto1 EN</value>
+  </data>
+  <data name="Benvenuto2" xml:space="preserve">
+    <value>Benvenuto2 EN</value>
+  </data>
+  <data name="Benvenuto4" xml:space="preserve">
+    <value>Benvenuto4 EN</value>
+  </data>
+  <data name="Cabina" xml:space="preserve">
+    <value>Cabina EN</value>
+  </data>
+  <data name="Conferma" xml:space="preserve">
+    <value>Conferma EN</value>
+  </data>
+  <data name="Help CE Error" xml:space="preserve">
+    <value>Help CE Error EN</value>
+  </data>
+  <data name="Help Sessione 1" xml:space="preserve">
+    <value>Help Sessione 1 EN</value>
+  </data>
+  <data name="Help Sessione 2" xml:space="preserve">
+    <value>Help Sessione 2 EN</value>
+  </data>
+  <data name="Help Sessione 3" xml:space="preserve">
+    <value>Help Sessione 3 EN</value>
+  </data>
+  <data name="Help VN 1" xml:space="preserve">
+    <value>Help VN 1 EN</value>
+  </data>
+  <data name="Help VN 2" xml:space="preserve">
+    <value>Help VN 2 EN</value>
+  </data>
+  <data name="Help VN 3" xml:space="preserve">
+    <value>Help VN 3 EN</value>
+  </data>
+  <data name="Help1" xml:space="preserve">
+    <value>Help1 EN</value>
+  </data>
+  <data name="Help2" xml:space="preserve">
+    <value>Help2 EN</value>
+  </data>
+  <data name="Help3" xml:space="preserve">
+    <value>Help3 EN</value>
+  </data>
+  <data name="Help4" xml:space="preserve">
+    <value>Help4 EN</value>
+  </data>
+  <data name="Help5" xml:space="preserve">
+    <value>Help5 EN</value>
+  </data>
+  <data name="Help6" xml:space="preserve">
+    <value>Help6 EN</value>
+  </data>
+  <data name="HelpCE1" xml:space="preserve">
+    <value>HelpCE1 EN</value>
+  </data>
+  <data name="HelpCE2" xml:space="preserve">
+    <value>HelpCE2 EN</value>
+  </data>
+  <data name="Logout-CT1" xml:space="preserve">
+    <value>Logout-CT1 EN</value>
+  </data>
+  <data name="Logout-CT2" xml:space="preserve">
+    <value>Logout-CT2 EN</value>
+  </data>
+  <data name="Logout-CT3" xml:space="preserve">
+    <value>Logout-CT3 EN</value>
+  </data>
+  <data name="NomeSito" xml:space="preserve">
+    <value>NomeSito EN</value>
+  </data>
+  <data name="Nomenclatura" xml:space="preserve">
+    <value>Nomenclatura EN</value>
+  </data>
+  <data name="Prova" xml:space="preserve">
+    <value>Test (en)</value>
+  </data>
+  <data name="TimeOver-CT1" xml:space="preserve">
+    <value>TimeOver-CT1 EN</value>
+  </data>
+  <data name="TimeOver-CT2" xml:space="preserve">
+    <value>TimeOver-CT2 EN</value>
+  </data>
+  <data name="TimeOver-CT3" xml:space="preserve">
+    <value>TimeOver-CT3 EN</value>
+  </data>
+  <data name="UI-Chiudi-DivCodice-Elettore" xml:space="preserve">
+    <value>UI-Chiudi-DivCodice-Elettore EN</value>
+  </data>
+  <data name="UI-Codice-Elettore" xml:space="preserve">
+    <value>UI-Codice-Elettore EN</value>
+  </data>
+  <data name="UI-Codice-Elettore-Titolo" xml:space="preserve">
+    <value>UI-Codice-Elettore-Titolo EN</value>
+  </data>
+  <data name="UI-Copia" xml:space="preserve">
+    <value>UI-Copia EN</value>
+  </data>
+  <data name="UI-Esci" xml:space="preserve">
+    <value>UI-Esci EN</value>
+  </data>
+  <data name="UI-Esci-Title" xml:space="preserve">
+    <value>UI-Esci-Title EN</value>
+  </data>
+  <data name="UI-Esempio-Codice-Elettore" xml:space="preserve">
+    <value>UI-Esempio-Codice-Elettore EN</value>
+  </data>
+  <data name="UI-Input-PH" xml:space="preserve">
+    <value>UI-Input-PH EN</value>
+  </data>
+  <data name="UI-Input-Titolo" xml:space="preserve">
+    <value>UI-Input-Titolo EN</value>
+  </data>
+  <data name="UI-Leggi" xml:space="preserve">
+    <value>UI-Leggi EN</value>
+  </data>
+  <data name="UI-Leggi-Titolo" xml:space="preserve">
+    <value>UI-Leggi-Titolo EN</value>
+  </data>
+  <data name="UI-Scarica" xml:space="preserve">
+    <value>UI-Scarica EN</value>
+  </data>
+  <data name="UI-Scarica-Titolo" xml:space="preserve">
+    <value>UI-Scarica-Title EN</value>
+  </data>
+  <data name="UI-Sessione" xml:space="preserve">
+    <value>UI-Sessione EN</value>
+  </data>
+  <data name="UI-Sessione-Titolo" xml:space="preserve">
+    <value>UI-Sessione-Titolo EN</value>
+  </data>
+  <data name="UI-Vai" xml:space="preserve">
+    <value>UI-Vai EN</value>
+  </data>
+  <data name="UI-Vai-Titolo" xml:space="preserve">
+    <value>UI-Vai-Title EN</value>
+  </data>
+  <data name="UI-link-PH" xml:space="preserve">
+    <value>UI-link-PH EN</value>
+  </data>
+  <data name="Voto1" xml:space="preserve">
+    <value>Voto1 EN</value>
+  </data>
+  <data name="Voto2" xml:space="preserve">
+    <value>Voto2 EN</value>
+  </data>
+  <data name="Voto2-A" xml:space="preserve">
+    <value>Voto2-A EN</value>
+  </data>
+  <data name="Voto2-B" xml:space="preserve">
+    <value>Voto2-B EN</value>
+  </data>
+  <data name="Voto2-C" xml:space="preserve">
+    <value>Voto2-C EN</value>
+  </data>
+  <data name="Voto3" xml:space="preserve">
+    <value>Voto3 EN</value>
+  </data>
+  <data name="Voto4" xml:space="preserve">
+    <value>Voto4 EN</value>
+  </data>
+  <data name="Voto5" xml:space="preserve">
+    <value>Voto5 EN</value>
+  </data>
+</root>

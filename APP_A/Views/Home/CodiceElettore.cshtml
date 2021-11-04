@@ -31,7 +31,7 @@
         <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 lookB lookH text-center mb-3 mt-3">
             <div id="fileImg" class="hidden">
                 <img src="~/img/Facsimile_CodiceElettore.jpg" alt="" class="logo-img-footer" />
-                <a id="closeDivImg" class="align-top" href="javascript:void(0);" title="@Localizer["UI-Chiudi-DivCodice-Elettore"]"><i class="fa fa-window-close mt-3"></i></a>
+                <a id="closeDivImg" onclick="esempio(2);" class="align-top" href="javascript:void(0);" title="@Localizer["UI-Chiudi-DivCodice-Elettore"]"><i class="fa fa-window-close mt-3"></i></a>
             </div>
             <i class="fa fa-pencil-square-o fa-3x fa-pull-left" aria-hidden="true"></i>
             <h1 class="font-weight-bold">
@@ -40,7 +40,7 @@
             <h3 class="font-weight-bold">
                 @Localizer["HelpCE2"]
             </h3>
-            <a id="openDivImg" class="btn-link text-uppercase" href="javascript:void(0);" title="@Localizer["UI-Esempio-Codice-Elettore"]">@Localizer["UI-link-PH"]</a>
+            <a id="openDivImg" onclick="esempio(1);" class="btn-link text-uppercase" href="javascript:void(0);" title="@Localizer["UI-Esempio-Codice-Elettore"]">@Localizer["UI-link-PH"]</a>
             <div class="form-group pt-3">
                 <input type="text" required placeholder="@Localizer["UI-Input-PH"]" class="form-control" name="CodiceElettoreclient" id="CodiceElettoreclient" title="@Localizer["UI-Input-Titolo"]">
             </div>

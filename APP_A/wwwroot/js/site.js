@@ -15,21 +15,41 @@ function copiaVN() {
     else
         alert("UI error");
 }
-//verifica il consenso dell'utente prima di reinderizzarlo sull'appb
-$('#CheckVoto').click(function ()
-{
+
+//$('#CheckVoto').click(function ()
+//{
+//    var bottoneVaiAlVoto = document.querySelector('button');
+//    if ($('#CheckVoto').is(':checked'))
+//    {
+//        alert("Nino");
+//        //$('#VaiAlVoto').removeClass('disabled');
+//        bottoneVaiAlVoto.disabled = false;
+//        $('#InfoConsenso').addClass('hidden');
+//    }
+//    else
+//    {
+//        //$('#VaiAlVoto').addClass('disabled')
+//        bottoneVaiAlVoto.disabled = true;
+//        $('#InfoConsenso').removeClass('hidden');
+//    }
+//});
+
+//verifica il consenso dell'utente prima di reinderizzarlo sull'appB
+function prosegui() {
+    
     var bottoneVaiAlVoto = document.querySelector('button');
-    if ($('#CheckVoto').is(':checked'))
-    {
-        //$('#VaiAlVoto').removeClass('disabled');
-        bottoneVaiAlVoto.disabled = false;
+    if ($('#CheckVoto').is(':checked')) {       
+        $('#VaiAlVoto').removeClass('hidden');        
+        //$('#InfoConsenso').addClass('hidden');
     }
-    else
-    {
-        //$('#VaiAlVoto').addClass('disabled')
-        bottoneVaiAlVoto.disabled = true;
+    else {
+        $('#VaiAlVoto').addClass('hidden')
+        //$('#InfoConsenso').removeClass('hidden');
     }
-});
+};
+
+
+
 //chiude il div contenente l'esempio per l'inserimento del codice elettore
 $('#closeDivImg').click(function () {
     $('#fileImg').addClass('hidden');
@@ -39,10 +59,27 @@ $('#openDivImg').click(function () {
     $('#fileImg').removeClass('hidden');
 });
 
+function esempio(valore)
+{
+    //alert("Lino");
+    if (valore == 1) {
+        $('#fileImg').removeClass('hidden');
+    }
+    else
+    {
+        $('#fileImg').addClass('hidden');
+    }
+
+}
+
+
+
+
 //controlla il formato del codice elettore
 function SetCodicePratica(CodicePratica) {
     var modulo = document.getElementById("#ce");
     let CodiceElettoreclient = /^[EI]\/[0-9][0-9][0-9][0-9][0-9][0-9][0-9]\/[0-9][0-9][0-9][0-9][0-9][0-9]+$/;
+    // E/2301299/999912
     var OK = CodiceElettoreclient.test(CodicePratica.value);
 
     // test 

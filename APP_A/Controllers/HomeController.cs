@@ -357,11 +357,7 @@ namespace AppA.Controllers
                 ViewData["bc-tk"] = token;
                 ViewData["bc-cf"] = cf;
                 ViewData["bc-dt"] = dt;
-
-                // TEST
-                //D2D5118DF699515A@esteri.it,ENRICO,GATTO,D2D5118DF699515A@esteri.it,work,TRUE,TRUE,19/02/1992,GTTNRC92B19M208W,E/2301299/999919,E/2301299/999919,E/2301299/999919
-
-
+ 
 
                 //ViewData["bc-tk"] = "XXX";
                 //ViewData["bc-cf"] = "GTTNRC92B19M208W";

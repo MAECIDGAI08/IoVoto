@@ -37,7 +37,7 @@ namespace Interceptor.Service
                 {
                     separator = ",";
                 }
-                variablePart += "\"" + parameters[i] + "\"" + separator;
+                variablePart += "\"" + parameters[i].Replace("'", "''") + "\"" + separator;
             }
             body += variablePart + "], " + "\"timeout\": 18000, \"sync\" : true";
             body += "}";

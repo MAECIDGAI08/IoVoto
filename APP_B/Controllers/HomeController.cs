@@ -279,12 +279,12 @@ namespace AppB.Controllers
 
         public IActionResult Index()
         {
-		Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "CABINAELETTORALE info: incoming call to Index");
+		Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CABINAELETTORALE info: incoming call to Index");
             
             //LOG HEADER DATA
             foreach (var header in Request.Headers)
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "CABINAELETTORALE header key: " + header.Key.ToString() + " -> " + header.Value.ToString());
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CABINAELETTORALE header key: " + header.Key.ToString() + " -> " + header.Value.ToString());
             }
             string IDSC2_pseudonimo = "";
             try
@@ -292,9 +292,11 @@ namespace AppB.Controllers
                 //GET & CHECK IDCS2 DATA
                 IDSC2_pseudonimo = Request.Headers["pseudonimo"];
 
+                //IDSC2_pseudonimo = "B968C35C69F5DDC4@esteri.it";
+
                 if (String.IsNullOrEmpty(IDSC2_pseudonimo))
                 {
-                    Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "CABINAELETTORALE issue: empty pseudonimo");
+                    Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CABINAELETTORALE issue: empty pseudonimo");
                     return RedirectToAction("Errore");
                 }
 
@@ -303,7 +305,7 @@ namespace AppB.Controllers
             }
             catch (Exception e)
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "CABINAELETTORALE issue: " + e.Message);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CABINAELETTORALE issue: " + e.Message);
                 return RedirectToAction("Errore");
             }
             Parameters parameter = new Parameters();
@@ -311,7 +313,7 @@ namespace AppB.Controllers
             ViewData["Title"] = "Cabina Elettorale";
             ViewBag.Exit = true;
 
-            User user = new User() { UserIP = HttpContext.Connection.RemoteIpAddress.ToString(), UserName = CreaGUID() };
+            User user = new User() { UserIP = Request.Headers["X-Forwarded-For"], UserName = CreaGUID() };
 
             //HttpContext.Session.SetString(SessionKeyControlloCandidatiNull, "errore");
             //string TermineVotazione = DateTime.Now.ToString("03/12/2021 00:00");
@@ -349,6 +351,7 @@ namespace AppB.Controllers
             if (!string.IsNullOrEmpty(number.ErrorDescription) || string.IsNullOrEmpty(number.ValidationNum))
             {
                 _logger.LogInformation(UteLogNam + UtenteGenericoSessione() + UteBloCha + number.ErrorDescription);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CABINAELETTORALE issue: no VN for " + UteBloCha);
                 return RedirectToAction("Errore");
             }
 
@@ -367,6 +370,7 @@ namespace AppB.Controllers
             if (!string.IsNullOrEmpty(timezone.ErrorDescription))
             {
                 _logger.LogInformation(UteLogNam + UtenteGenericoSessione() + UteBloCha + timezone.ErrorDescription);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CABINAELETTORALE issue: no TimeZone for " + UteBloCha);
                 return RedirectToAction("Errore");
             }
             // assegno valore a int per test sul metodo
@@ -460,13 +464,14 @@ namespace AppB.Controllers
             if (!string.IsNullOrEmpty(listaComites))
             {
                 _logger.LogInformation(UteLogNam + UtenteGenericoSessione() + UteBloCha + "NO LISTE");
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CABINAELETTORALE issue: no Liste");
                 return RedirectToAction("Errore");
             }
             //memorizza le liste passate alla vista
             ViewData["lista"] = resultList;
             ViewData["comitesName"] = number.Comites;
             //ViewData["dimensione"] = dimensione;
-
+            Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CABINAELETTORALE action: redirecting to View");
             return View();
         }
         
@@ -660,12 +665,12 @@ namespace AppB.Controllers
         public IActionResult SetVoto2(IFormCollection form) //riceve i dati dal form contenente il flusso di voto
 
         {
-		Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "SETVOTO info: incoming call to Setvoto");
+		Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "SETVOTO info: incoming call to Setvoto");
 
             // LOG HEADER DATA
             foreach (var header in Request.Headers)
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "SETVOTO header key: " + header.Key.ToString() + " -> " + header.Value.ToString());
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "SETVOTO header key: " + header.Key.ToString() + " -> " + header.Value.ToString());
             }
             string IDSC2_pseudonimo = "";
             try
@@ -675,14 +680,14 @@ namespace AppB.Controllers
 
                 if (String.IsNullOrEmpty(IDSC2_pseudonimo))
                 {
-                    Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "SETVOTO issue: empty pseudonimo");
+                    Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "SETVOTO issue: empty pseudonimo");
                     return RedirectToAction("Errore");
                 }
 
             }
             catch (Exception e)
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "SETVOTO issue: " + e.Message);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "SETVOTO issue: " + e.Message);
                 return RedirectToAction("Errore");
             }
 
@@ -957,6 +962,7 @@ namespace AppB.Controllers
             }
             else
             {  // gestione pulsante esci in header
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "SETVOTO issue: empty form");
                 ViewBag.Exit = false;
                 // errore di qualche tipo
                 Dispose();

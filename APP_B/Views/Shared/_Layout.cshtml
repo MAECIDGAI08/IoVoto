@@ -8,7 +8,20 @@
 <!DOCTYPE html>
 <html lang="it-it">
 <head>
-    <meta charset="utf-8" />
+    <script>
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "https://ingestion.webanalytics.italia.it/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '@(Startup.StaticConfig.GetSection("WebAnalytics").Value)']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Ministero Affari Esteri Servizi Consolari Online">
     <meta name="copyright" content="Ministero Affari Esteri">
@@ -19,16 +32,22 @@
     <meta http-equiv="Expires" content="-1" />
     <partial name="_Favicons" />
     <title>@Localizer["Sito-Nome"] | @ViewData["Title"]</title>
-    <script src="~/lib/jquery/dist/jquery-351.js"></script>
+    <script src="~/js/jquery-351.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://kit.fontawesome.com/32496546a7.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="~/js/fontAwesome.js"></script>
+    @*<script src="https://kit.fontawesome.com/32496546a7.js" crossorigin="anonymous"></script>*@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="~/css/shared.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/addon.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-    <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,400i,600,600i,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/0964c0b11f.js" crossorigin="anonymous"></script>
+    @*<link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,400i,600,600i,700" rel="stylesheet">*@
+
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css">
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+
+
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/0964c0b11f.js" crossorigin="anonymous"></script>*@
 
     <script type="text/javascript" language="javascript">
         function preventBack() { window.history.forward(); }
@@ -36,7 +55,7 @@
         window.onunload = function () { null };
     </script>
 
-    
+
 
 </head>
 @inject IStringLocalizer<SharedResource> Localizer
@@ -107,7 +126,7 @@
             </div>
         </div>
     </div>
-    <environment include="Development">
+    @*<environment include="Development">
         <script src="~/lib/jquery/dist/jquery-351.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -125,7 +144,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
         </script>       
-    </environment>
+    </environment>*@
     @RenderSection("Scripts", required: false)
     <script>
         function setlanguage(culture) {

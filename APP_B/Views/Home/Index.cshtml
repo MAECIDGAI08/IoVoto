@@ -10,7 +10,7 @@
     //riceve la lista dal controller
     var lista = ViewData["lista"];
     // nome pdf
-    String filename = "~/PDF/COMITES-" + @ViewData["comitesName"].ToString() + ".pdf";
+    String filename = "~/img/PDF/Manifesto_Elettorale_" + @ViewData["comitesName"].ToString() + ".pdf";
     bool ExitVisible = ViewBag.Exit;
     Layout = "_Layout";
 }
@@ -28,7 +28,7 @@
                         <form method="POST" id="register-form" class="msform" asp-controller="Home" asp-action="SetVoto2">
                             <div class="look mb-5">
                                 <ul id="progressbar">
-                                    <li class="judge active first-li" style="width:25%;" tabindex="0" title="Sezione Validation Number"><span class="pb">@Localizer["UI-PB1"]</span></li>
+                                    <li class="judge active first-li current-li" style="width:25%;" tabindex="0" title="Sezione Validation Number"><span class="pb">@Localizer["UI-PB1"]</span></li>
                                     <li class="personal" style="width:25%;" tabindex="0" title="Sezione Lista dei Com.It.Es"><span class="pb">@Localizer["UI-PB2"]</span></li>
                                     <li class="security" style="width:25%;" tabindex="0" title="Sezione Lista dei Candidati per la Lista selezionata"><span class="pb">@Localizer["UI-PB3"]</span></li>
                                     <li class="checklist last-li" style="width:25%;" tabindex="0" title="Sezione Riepilogo e conferma del Voto"><span class="pb">@Localizer["UI-PB4"]</span></li>
@@ -79,9 +79,9 @@
                                             {
                                                 <tr>
                                                     <td class="text-center justify-content-center test">
-                                                        <img id='imgLista[@item.ordine]' class='imgListe' src="~/Liste/@Context.Session.GetString("_Comites")/@item.imageUrl" />
+                                                        <img id='imgLista[@item.ordine]' class='imgListe' src="~/img/Liste/@Context.Session.GetString("_Comites")/@item.imageUrl" />
                                                         <input type='radio' id='@item.ordine' name='Partito' value='@item.Name' class='Radio-Input' onclick='$("#radioListe").val(1); $("#radioListeSelect").val("@(item.Name)");' autocomplete="off" />
-                                                        <label for='inpLista[@item.ordine]' class='Radio liste'>@item.Name</label>
+                                                        <label for='@item.ordine' class='Radio liste'>@item.Name</label>
                                                     </td>
                                                     <td class="invisible" style="display:none;">@(ViewData["maxSel"] = item.MaxSel);</td>
                                                 </tr>
@@ -252,70 +252,68 @@
                                 </div>
                             </fieldset>
                             @*modulo lista riepilogo*@
-                            <fieldset id="msform-field-4">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
-                                        <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 text-center">
-                                            <div id="fs-four-votoUfficiale" class="lookC VotoGood">
-                                                <i class="fa fa-check-square fa-3x fa-pull-left"></i>
+                        <fieldset id="msform-field-4">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
+                                    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8 text-center">
+                                        <div id="fs-four-votoUfficiale" class="lookC VotoGood">
+                                            <i class="fa fa-check-square fa-3x fa-pull-left"></i>
 
-                                                <h1 class="Voto">@Localizer["FS4-Ct1"]</h1>
-                                                <hr />
-                                                <span id="testoA">@Localizer["FS4-Ct10"]</span><hr />
-                                                <div align="center">
-                                                    <h4 id='Candi'>@Localizer["FS4-Ct4"]</h4>
-                                                    <h4 id='NoCandi'>@Localizer["FS4-N-Ct4"]</h4>
-                                                </div>
-                                                <table class="table table-hover table-bordered table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl" id="tabellaRiepilogo">
-                                                    <tr>
-                                                        <th scope="col">@Localizer["FS3-TH-nomeECognome"]</th>
-                                                        <th scope="col">@Localizer["FS3-TH-dataNascita"]</th>
-                                                        <th scope="col">@Localizer["FS3-TH-LuogoNascita"]</th>
-                                                    </tr>
-                                                    <tbody id="datiRiepilogo">
-                                                    </tbody>
-                                                </table>
+                                            <h1 class="Voto">@Localizer["FS4-Ct1"]</h1>
+                                            <hr />
+                                            <span id="testoA">@Localizer["FS4-Ct10"]</span><hr />
+                                            <div align="center">
+                                                <h4 id='Candi'>@Localizer["FS4-Ct4"]</h4>
+                                                <h4 id='NoCandi'>@Localizer["FS4-N-Ct4"]</h4>
                                             </div>
-                                            @*start riepilogo scheda bianca*@
-                                            <div id="fs-four-boxWhiteCard" class="lookC pb-4">
-                                                @{
-                                                    <partial name="SchedaBianca" />
-                                                }
-                                            </div>
-                                            @*end riepilogo scheda bianca*@
+                                            <table class="table table-hover table-bordered table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl" id="tabellaRiepilogo">
+                                                <tr>
+                                                    <th scope="col">@Localizer["FS3-TH-nomeECognome"]</th>
+                                                    <th scope="col">@Localizer["FS3-TH-dataNascita"]</th>
+                                                    <th scope="col">@Localizer["FS3-TH-LuogoNascita"]</th>
+                                                </tr>
+                                                <tbody id="datiRiepilogo">
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
+                                        @*start riepilogo scheda bianca*@
+                                        <div id="fs-four-boxWhiteCard" class="lookC pb-4">
+                                            @{
+                                                <partial name="SchedaBianca" />
+                                            }
+                                        </div>
+                                        @*end riepilogo scheda bianca*@
                                     </div>
-                                    <div class="row mt-0 pt-0">
-                                        <div class="col-sm-12 col-md-12 col-lg-12 mt-5 mb-5">
-                                            <div id="AvvisoFinale" class="look">
-                                                <div class="alert alert-primary text-justify">
-                                                    <i class="fa fa-exclamation fa-3x fa-pull-left " aria-hidden="true"></i>
-                                                    <h3>@Localizer["FS4-Ct2"]</h3>
-                                                </div>
-                                            </div>
-                                            <a id="btnRiepilogo" data-form="register-form" href="javascript:void(0);" class="pc-button pc-button-blue text-uppercase" onclick="$('#radioListe').val(0); twoback(); $('#datiRiepilogo').html('');" title="@Localizer["UI-B-TitleD"]">@Localizer["UI-B"]</a>&nbsp;
-                                            <a id="ConfermaVoto" href="javascript:void(0);" class="pc-button pc-button-blue text-uppercase" onclick="gameOver(0);" title="@Localizer["UI-Confirm2-Title"]"><i class="fa fa-lg fa-paper-plane-o" aria-hidden="true"></i> @Localizer["UI-Confirm2"]</a>
-
-                                            <div id="ConfermaFinale" class="look">
-                                                <i class="fa fa-question-circle fa-4x fa-pull-left" aria-hidden="true"></i> <h1 class="text-center">@Localizer["FS4-Conferma1"]</h1>
-                                                <hr />
-                                                <h3 class="text-left">@Localizer["FS4-Conferma2"]</h3>
-                                                <h3 class="text-left">@Localizer["FS4-Conferma3"]</h3>
-                                                <a id="ConfermaVotoDef" class="pc-button pc-button-green text-uppercase form-submit" data-form="register-form" title="@Localizer["UI-Si-Title"]"><i class="fa fa-lg fa-check-square" aria-hidden="true"></i> @Localizer["UI-Si"]</a>
-                                                @*<a id="ConfermaVotoNO" href="javascript:void(0);" class="pc-button pc-button-red text-uppercase" onclick="gameOver(1); $('#register-form').submit();" title="@Localizer["UI-No-Title"]"><i class="fa fa-lg fa-stop-circle-o" aria-hidden="true"></i> @Localizer["UI-No"]</a>*@
-                                                <a id="ConfermaVotoNO" href="javascript:void(0);" class="pc-button pc-button-red text-uppercase" onclick="gameOver(1);" title="@Localizer["UI-No-Title"]"><i class="fa fa-lg fa-stop-circle-o" aria-hidden="true"></i> @Localizer["UI-No"]</a>
-
-
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2"></div>
+                                </div>
+                                <div class="row mt-0 pt-0">
+                                    <div class="col-sm-12 col-md-12 col-lg-12 mt-5 mb-5">
+                                        <div id="AvvisoFinale" class="look">
+                                            <div class="alert alert-primary text-justify">
+                                                <i class="fa fa-exclamation fa-3x fa-pull-left " aria-hidden="true"></i>
+                                                <h3>@Localizer["FS4-Ct2"]</h3>
                                             </div>
                                         </div>
+                                        <div id="ConfermaFinale" class="look">
+                                            <i class="fa fa-question-circle fa-4x fa-pull-left" aria-hidden="true"></i> <h1 class="text-center">@Localizer["FS4-Conferma1"]</h1>
+                                            <hr />
+                                            <h3 class="text-left">@Localizer["FS4-Conferma2"]</h3>
+                                            <h3 class="text-left">@Localizer["FS4-Conferma3"]</h3>
+                                            <a id="ConfermaVotoDef" class="pc-button pc-button-green text-uppercase form-submit" data-form="register-form" title="@Localizer["UI-Si-Title"]"><i class="fa fa-lg fa-check-square" aria-hidden="true"></i> @Localizer["UI-Si"]</a>
+                                            @*<a id="ConfermaVotoNO" href="javascript:void(0);" class="pc-button pc-button-red text-uppercase" onclick="gameOver(1); $('#register-form').submit();" title="@Localizer["UI-No-Title"]"><i class="fa fa-lg fa-stop-circle-o" aria-hidden="true"></i> @Localizer["UI-No"]</a>*@
+                                            <a id="ConfermaVotoNO" href="javascript:void(0);" class="pc-button pc-button-red text-uppercase" onclick="gameOver(1);" title="@Localizer["UI-No-Title"]"><i class="fa fa-lg fa-stop-circle-o" aria-hidden="true"></i> @Localizer["UI-No"]</a>
+                                        </div>
+
                                     </div>
                                 </div>
-                                @*end riepilogo voto*@
-                                <!--  <input type="hidden" name="ValoreHiddenUtils" value="valore valore utile non usato" /> -->
+                            </div>
+                            @*end riepilogo voto*@
+                            <!--  <input type="hidden" name="ValoreHiddenUtils" value="valore valore utile non usato" /> -->
+                            <a id="btnRiepilogo" data-form="register-form" href="javascript:void(0);" class="pc-button pc-button-blue text-uppercase" onclick="$('#radioListe').val(0); twoback(); $('#datiRiepilogo').html('');" title="@Localizer["UI-B-TitleD"]">@Localizer["UI-B"]</a>&nbsp;
+                            <a id="ConfermaVoto" href="javascript:void(0);" class="pc-button pc-button-blue text-uppercase" onclick="gameOver(0);" title="@Localizer["UI-Confirm2-Title"]"><i class="fa fa-lg fa-paper-plane-o" aria-hidden="true"></i> @Localizer["UI-Confirm2"]</a>
 
-                            </fieldset>
+                        </fieldset>
                         </form>
                         @*end form multistep *@
                     </div>

@@ -96,22 +96,6 @@ label.liste {
     margin-top: 20px;
 }
 
-
-.italia-it-button {
-    display: inline-block;
-    position: relative;
-    padding: 0;
-    color: #FFF;
-    font-family: "Titillium_Web",HelveticaNeue,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
-    font-weight: 600;
-    line-height: 1em;
-    text-decoration: none;
-    border: 0;
-    text-align: center;
-    cursor: pointer;
-    overflow: hidden
-}
-
 .download-voto {
     width: 176px;
     height: 52px;

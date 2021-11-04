@@ -246,15 +246,52 @@ margin-top: 1.6em;
 
 .clearFloat {
     clear: both;
-} 
+}
 
 
 .imgTestata {
-float: left;
-width: 256px;
-height: 256px;
-padding: 0.5em;
+    /*width: 256px;*/  
+    width: 100%;
+    height: auto;
 }
+
+
+.imgTestata1 {
+    opacity: 30%;
+    padding: 0.5em;
+}
+
+
+.txtTestata {
+font-size: 1.2rem;
+float: right;
+}
+
+.carousel-caption {
+    position: absolute;
+    right: 15%;
+    bottom: 20px;
+    left: 15% !important;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+}
+
+
+
+
+.carousel-caption h2 {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right;
+}
+
+.item {
+    position: relative;
+}
+
+
 
 li, ul {
     list-style-type: none;

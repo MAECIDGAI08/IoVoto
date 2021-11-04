@@ -287,12 +287,12 @@ namespace AppA.Controllers
         
         public IActionResult CodiceElettore(String t = null)
         {
-            Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE info: GET " + t);
+            Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "COIDCEELETTORE info: GET " + t);
 
-            //INPUT CHECK
+            ////INPUT CHECK
             if (String.IsNullOrEmpty(t))
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE issue: empty t");
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "COIDCEELETTORE issue: empty t");
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
 
@@ -303,7 +303,7 @@ namespace AppA.Controllers
                 string[] QSparts = decryptedQS.Split('|');
                 if (QSparts.Length != 3)
                 {
-                    Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE issue: wrong t" + decryptedQS);
+                    Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CODICEELETTORE issue: wrong t" + decryptedQS);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
                 String token = QSparts[0];
@@ -312,19 +312,19 @@ namespace AppA.Controllers
 
                 if (String.IsNullOrEmpty(token))
                 {
-                    Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE issue: empty token");
+                    Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CODICEELETTORE issue: empty token");
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
                 if (String.IsNullOrEmpty(cf) || !Utility.Utils.ValidateField(cf, "req_cf"))
                 {
-                    Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE issue: wrong cf " + cf);
+                    Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "COIDCEELETTORE issue: wrong cf " + cf);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
                 if (String.IsNullOrEmpty(dt) || !Utility.Utils.ValidateField(dt, "req_date"))
                 {
-                    Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE issue: wrong dt " + dt);
+                    Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CODICEELETTORE issue: wrong dt " + dt);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
@@ -333,12 +333,12 @@ namespace AppA.Controllers
                 Token bcToken = Token.parseTokenFromJSON(queryInToken.Content);
                 if (!string.IsNullOrEmpty(bcToken.ErrorDescription))
                 {
-                    Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE issue: token not found for " + cf);
+                    Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CODICEELETTORE issue: token not found for " + cf);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
                 if (bcToken.CodiceFiscaleVal != cf)
                 {
-                    Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE issue: no token cf match " + cf + " " + token);
+                    Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "COIDCEELETTORE issue: no token cf match " + cf + " " + token);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
@@ -346,7 +346,7 @@ namespace AppA.Controllers
                 var diffInSeconds = (DateTime.Now - DateTime.ParseExact(bcToken.DateVal, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)).TotalSeconds;
                 if (diffInSeconds > Int32.Parse(Startup.StaticConfig.GetSection("BlockChain").GetSection("TokenExpire").Value))
                 {
-                    Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE issue: token expired for " + cf + ": " + bcToken.TokenVal + " " + bcToken.DateVal);
+                    Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CODICEELETTORE issue: token expired for " + cf + ": " + bcToken.TokenVal + " " + bcToken.DateVal);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
@@ -357,6 +357,18 @@ namespace AppA.Controllers
                 ViewData["bc-tk"] = token;
                 ViewData["bc-cf"] = cf;
                 ViewData["bc-dt"] = dt;
+
+                // TEST
+                //D2D5118DF699515A@esteri.it,ENRICO,GATTO,D2D5118DF699515A@esteri.it,work,TRUE,TRUE,19/02/1992,GTTNRC92B19M208W,E/2301299/999919,E/2301299/999919,E/2301299/999919
+
+
+
+                //ViewData["bc-tk"] = "XXX";
+                //ViewData["bc-cf"] = "GTTNRC92B19M208W";
+                //ViewData["bc-dt"] = "19/02/1992";
+
+
+
                 // fine emilio
 
                 // passiamo il comites alla pagina
@@ -377,7 +389,7 @@ namespace AppA.Controllers
             }
             catch (Exception e)
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "COIDCEELETTORE issue: " + e.Message);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "COIDCEELETTORE issue: " + e.Message);
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
         }
@@ -387,15 +399,7 @@ namespace AppA.Controllers
         {
             return null;           
         }
-        
-        public IActionResult RicevutadiVoto()
-        {
-            ViewBag.Exit = true;
-            ViewData["Title"] = "Ricevuta del voto";
-            //_logger.LogInformation("UTENTE: accesso alla pagina RicevutadiVoto");
-            _logger.LogInformation(UteLogNam + NomeUtente() + UtenteGenerico() + UteLogDo + " VaiAlVoto");
-            return SessionOut();
-        }
+                
         // per la vista del tempo scaduto
         public IActionResult TimeOver()
         {
@@ -406,99 +410,14 @@ namespace AppA.Controllers
             _logger.LogInformation(UteLogNam + NomeUtente() + UtenteGenerico() + UteLogDo + " TimeOver");
             return SessionOut();
         }
-        public IActionResult StampaRicevutaDiVoto()
-        {
-            _logger.LogInformation(UteLogNam + NomeUtente() + UteLogDo + " StampaRicevutaDiVoto");
-            
-            //passaggio dati elettore in viewdata per visualizzarli nella view
-            string qualeGenere = HttpContext.Session.GetString("_SessoUtente");
-            string sesso = variousServices.SignoreSignora(qualeGenere);
-            ViewData["sesso"] = sesso;
-
-            string soggettoricevuta = HttpContext.Session.GetString(SessionKeyNomeUtente) + " " + HttpContext.Session.GetString(SessionKeyCognomeUtente);
-            ViewData["soggetto"] = soggettoricevuta;
-            ViewData["luogoNascita"] = HttpContext.Session.GetString(SessionKeyLuogoNascitaUtente);
-            ViewData["dataNascita"] = HttpContext.Session.GetString(SessionKeyDataNascitaUtente);
-            ViewData["COMITES"] = HttpContext.Session.GetString(SessionKeyComitesUtente);
-
-            string absoluteurl = Startup.StaticConfig.GetSection("AppA_URL").Value;
-            string BSUri = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css/";
-
-            // Fuso orario locale           
-            DateTime dateNow = DateTime.Now;
-            string dataItalia = dateNow.ToString("d");
-            string oraItalia = dateNow.ToString("T");
-
-            // UTC
-            DateTime utcNow = DateTime.UtcNow;
-            string dataStampaUtc = utcNow.ToString();
-            // fine area dati
-
-            // tentativo di usare lo stream
-            var stream = env.WebRootFileProvider.GetFileInfo("img/LogoRepubblica.png").CreateReadStream();
-            Image image = Image.FromStream(stream);
-            Graphics graphics = Graphics.FromImage(image);
-
-            // Stringa generazione pagina          
-            string viewHtml = "<!DOCTYPE html>";
-            viewHtml += "<html lang = \"it\" >";
-            viewHtml += "<head>";
-            viewHtml += "<link rel=\"stylesheet\" href=\"" + absoluteurl + "/css/shared.css\" />";
-            viewHtml += "<link rel=\"stylesheet\" href=\"" + absoluteurl + "/css/main.css\" />";
-            viewHtml += "</head>";
-            viewHtml += "<body>";
-            viewHtml += "<div class=\"pdf centro\">";
-            viewHtml += "<div id=\"Grid\" class=\"scatola centro\">";
-            viewHtml += "<div class=\"centro mt-3\" >";
-
-            viewHtml += "<img class=\"logoRep centro\" src=\"" + absoluteurl + "/img/LogoRepubblica.png \" width=\"100px;\" height=\"100px;\" />";
-            viewHtml += "</div>";
-            viewHtml += "<div class=\"centro mt-5 mb-5 \">";
-            viewHtml += "<h1 class=\"text-uppercase ufficiale\" style=\"text-align: center;\">RICEVUTA ELETTORALE</h1>";
-            viewHtml += "<h2 class=\"text-uppercase ufficiale\" style=\"text-align: center;\">ELEZIONI DEI COMITATI DEGLI ITALIANI ALL’ESTERO</h2>";
-            viewHtml += "</div>";
-            viewHtml += "<div class=\"ufficiale centro mt-4\">";
-            viewHtml += "<h3>si attesta che</h4>";
-            viewHtml += "</div>";
-            viewHtml += "<div class=\"ufficiale centro mt-3\">";
-            viewHtml += "<h4>" + " " + @ViewData["sesso"] + " " + @ViewData["soggetto"] + "</h5>";
-            viewHtml += "<h4> nato/a a " + @ViewData["luogoNascita"] + " il " + @ViewData["dataNascita"] + "</h5>";
-            viewHtml += "</div>";
-            viewHtml += "<div class=\"ufficiale centro mt-3 mb-4\">";
-            viewHtml += "<h4>ha espresso il suo voto elettronico sulla piattaforma " + _localizer["Sito-Nome"] + " per il COMITES di " + @ViewData["COMITES"] + ".</h5>";
-            viewHtml += "</div>";
-            viewHtml += "</div>";
-            viewHtml += "</div>";
-            viewHtml += "</body>";
-            viewHtml += "</html>";
-
-            Byte[] res = null;
-
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            using (MemoryStream ms = new MemoryStream())
-            {
-                string testStylesheet = BSUri;
-                var cssData = TheArtOfDev.HtmlRenderer.PdfSharp.PdfGenerator.ParseStyleSheet(testStylesheet, true);
-                var pdf = PdfGenerator.GeneratePdf(viewHtml, PdfSharp.PageSize.A4, 20, cssData);
-                pdf.Save(ms);
-                res = ms.ToArray();
-            }
-            System.Net.Mime.ContentDisposition cd = new System.Net.Mime.ContentDisposition
-            {
-                FileName = "Portale " + _localizer["Sito-Nome"] + " Ricevuta di voto emessa il " + dataItalia + " alle " + oraItalia + ".pdf",
-                Inline = true
-            };
-            Response.Headers.Add("Content-Disposition", cd.ToString());
-            Response.Headers.Add("X-Content-Type-Options", "nosniff");
-            return new FileContentResult(res, "application/pdf");
-        }
+        
         public IActionResult Faq()
         {
             ViewBag.Exit = true;
             ViewData["Title"] = "F.A.Q.";
             _logger.LogInformation(UteLogNam + UtenteGenerico() + UteLogDo + " F.A.Q");
             //_logger.LogInformation("UTENTE: accesso alla pagina F.A.Q");
-            return SessionOut();
+            return View();
         }
         public IActionResult Logout()
         {
@@ -517,7 +436,7 @@ namespace AppA.Controllers
             ViewData["Title"] = "Informativa Cookies";
             //_logger.LogInformation("UTENTE: Accesso alla pagina CookiePolicy");
             _logger.LogInformation(UteLogNam + NomeUtente() + UtenteGenerico() + UteLogDo + " CookiePolicy");
-            return SessionOut();
+            return View();
         }
         public IActionResult NoteLegali()
         {
@@ -526,7 +445,7 @@ namespace AppA.Controllers
 
             _logger.LogInformation(UteLogNam + NomeUtente() + UtenteGenerico() + UteLogDo + " NoteLegali");
             //_logger.LogInformation("UTENTE: Accesso alla pagina NoteLegali");
-            return SessionOut();
+            return View(); ;
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -6,7 +6,8 @@
     @inject UserManager<ApplicationUser> UserManager*@
 @*END INTEGRAZIONE SPID*@
 @inject IViewLocalizer Localizer
-
+@using Microsoft.Extensions.Localization
+@using Microsoft.AspNetCore.Http;
 @inject IStringLocalizer<SharedResource> Localizer
 @{
     bool ExitVisible = ViewBag.Exit;
@@ -26,16 +27,10 @@
                 @if (ExitVisible == true)
                 {
 
-                     @*@{
-                    if (SignInManager.IsSignedIn(User))
-                    {*@
-                    <partial name="_ExitButton" />     
-                    @*}
-                    else
-                    {
-
+                    @if (Context.Session.GetString("LOGGED") == "1")
+                    {                     
+                    <partial name="_ExitButton" />
                     }
-                    }@*@
                 }
 
             </div>

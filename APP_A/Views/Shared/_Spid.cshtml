@@ -1,37 +1,37 @@
 ﻿<div class="spid-div" style="@(ViewData["DisableSPID"].ToString()=="1"?"display:none;":"")">
     <!-- AGID - SPID IDP BUTTON MEDIUM "ENTRA CON SPID" * begin * -->
-    <a href="#" class="italia-it-button italia-it-button-size-m button-spid" spid-idp-button="#spid-idp-button-medium-get" aria-haspopup="true" aria-expanded="false">
+    <a href="#" class="italia-it-button italia-it-button-size-l button-spid" spid-idp-button="#spid-idp-button-large-get" aria-haspopup="true" aria-expanded="false">
         <span class="italia-it-button-icon"><img src="~/img/spid-ico-circle-bb.png" alt="" /></span>
         <span class="italia-it-button-text">Entra con SPID</span>
     </a>
-    <div id="spid-idp-button-medium-get" class="spid-idp-button spid-idp-button-tip spid-idp-button-relative">
-        <ul id="spid-idp-list-medium-root-get" class="spid-idp-button-menu" aria-labelledby="spid-idp">
+    <div id="spid-idp-button-large-get" class="spid-idp-button spid-idp-button-tip spid-idp-button-relative">
+        <ul id="spid-idp-list-large-root-get" class="spid-idp-button-menu" aria-labelledby="spid-idp">
             <li class="spid-idp-button-link" data-idp="arubaid">
-                <a href="@(ViewData["outURL"])?entityID=@(ViewData["arubaid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Aruba ID</span><img src="~/img/spid-idp-arubaid.png" alt="Aruba ID" /></a>
+                <a href="@(ViewData["outURL"])?entityID=@(ViewData["arubaid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Aruba ID</span><img src="~/img/spid-idp-arubaid.svg" alt="Aruba ID" /></a>
             </li>
             <li class="spid-idp-button-link" data-idp="infocertid">
-                <a href="@(ViewData["outURL"])?entityID=@(ViewData["infocertid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Infocert ID</span><img src="~/img/spid-idp-infocertid.png" alt="Infocert ID" /></a>
+                <a href="@(ViewData["outURL"])?entityID=@(ViewData["infocertid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Infocert ID</span><img src="~/img/spid-idp-infocertid.svg" alt="Infocert ID" /></a>
             </li>
             <li class="spid-idp-button-link" data-idp="intesaid">
-                <a href="@(ViewData["outURL"])?entityID=@(ViewData["intesaid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Intesa ID</span><img src="~/img/spid-idp-intesaid.png" alt="Intesa ID" /></a>
+                <a href="@(ViewData["outURL"])?entityID=@(ViewData["intesaid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Intesa ID</span><img src="~/img/spid-idp-intesaid.svg" alt="Intesa ID" /></a>
             </li>
             <li class="spid-idp-button-link" data-idp="lepidaid">
-                <a href="@(ViewData["outURL"])?entityID=@(ViewData["lepidaid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Lepida ID</span><img src="~/img/spid-idp-lepidaid.png" alt="Lepida ID" /></a>
+                <a href="@(ViewData["outURL"])?entityID=@(ViewData["lepidaid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Lepida ID</span><img src="~/img/spid-idp-lepidaid.svg" alt="Lepida ID" /></a>
             </li>
             <li class="spid-idp-button-link" data-idp="namirialid">
-                <a href="@(ViewData["outURL"])?entityID=@(ViewData["namirialid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Namirial ID</span><img src="~/img/spid-idp-namirialid.png" alt="Namirial ID" /></a>
+                <a href="@(ViewData["outURL"])?entityID=@(ViewData["namirialid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Namirial ID</span><img src="~/img/spid-idp-namirialid.svg" alt="Namirial ID" /></a>
             </li>
             <li class="spid-idp-button-link" data-idp="posteid">
-                <a href="@(ViewData["outURL"])?entityID=@(ViewData["posteid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Poste ID</span><img src="~/img/spid-idp-posteid.png" alt="Poste ID" /></a>
+                <a href="@(ViewData["outURL"])?entityID=@(ViewData["posteid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Poste ID</span><img src="~/img/spid-idp-posteid.svg" alt="Poste ID" /></a>
             </li>
             <li class="spid-idp-button-link" data-idp="spiditalia">
-                <a href="@(ViewData["outURL"])?entityID=@(ViewData["spiditalia"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">SPIDItalia Register.it</span><img src="~/img/spid-idp-spiditalia.png" alt="SpidItalia" /></a>
+                <a href="@(ViewData["outURL"])?entityID=@(ViewData["spiditalia"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">SPIDItalia Register.it</span><img src="~/img/spid-idp-spiditalia.svg" alt="SpidItalia" /></a>
             </li>
             <li class="spid-idp-button-link" data-idp="sielteid">
-                <a href="@(ViewData["outURL"])?entityID=@(ViewData["sielteid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Sielte ID</span><img src="~/img/spid-idp-sielteid.png" alt="Sielte ID" /></a>
+                <a href="@(ViewData["outURL"])?entityID=@(ViewData["sielteid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Sielte ID</span><img src="~/img/spid-idp-sielteid.svg" alt="Sielte ID" /></a>
             </li>
             <li class="spid-idp-button-link" data-idp="timid">
-                <a href="@(ViewData["outURL"])?entityID=@(ViewData["timid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Tim ID</span><img src="~/img/spid-idp-timid.png" alt="Tim ID" /></a>
+                <a href="@(ViewData["outURL"])?entityID=@(ViewData["timid"])&target=@(ViewData["inURL"])"><span class="spid-sr-only">Tim ID</span><img src="~/img/spid-idp-timid.svg" alt="Tim ID" /></a>
             </li>
             <li class="spid-idp-support-link">
                 <a href="https://www.spid.gov.it">Maggiori informazioni</a>

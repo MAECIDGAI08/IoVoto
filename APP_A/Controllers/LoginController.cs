@@ -44,12 +44,12 @@ namespace AppA.Controllers
      
         public IActionResult LoginFromCF(String t = null)
         {
-            Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF info: GET " + t);
+            Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF info: GET " + t);
 
             //INPUT CHECK
             if (String.IsNullOrEmpty(t))
             {
-                Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF issue: empty t");
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF issue: empty t");
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
 
@@ -60,7 +60,7 @@ namespace AppA.Controllers
                 string[] QSparts = decryptedQS.Split('|');
                 if (QSparts.Length != 3)
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF issue: wrong t" + decryptedQS);
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF issue: wrong t" + decryptedQS);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
@@ -70,19 +70,19 @@ namespace AppA.Controllers
 
                 if (String.IsNullOrEmpty(token))
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF issue: empty token");
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF issue: empty token");
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
                 if (String.IsNullOrEmpty(cf) || !Utils.ValidateField(cf, "req_cf"))
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF issue: wrong cf " + cf);
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF issue: wrong cf " + cf);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
                 if (String.IsNullOrEmpty(ce))
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF issue: empty ce");
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF issue: empty ce");
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
@@ -91,12 +91,12 @@ namespace AppA.Controllers
                 Token bcToken = Token.parseTokenFromJSON(queryInToken.Content);
                 if (!string.IsNullOrEmpty(bcToken.ErrorDescription))
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF issue: token not found for " + cf);
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF issue: token not found for " + cf);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
                 if (bcToken.CodiceFiscaleVal != cf)
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF issue: no token cf match " + cf + " " + token);
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF issue: no token cf match " + cf + " " + token);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
@@ -104,7 +104,7 @@ namespace AppA.Controllers
                 var diffInSeconds = (DateTime.Now - DateTime.ParseExact(bcToken.DateVal, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)).TotalSeconds;
                 if (diffInSeconds > Int32.Parse(Startup.StaticConfig.GetSection("BlockChain").GetSection("TokenExpire").Value))
                 {
-                    Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF issue: token expired for " + cf + ": " + bcToken.TokenVal + " " + bcToken.DateVal);
+                    Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF issue: token expired for " + cf + ": " + bcToken.TokenVal + " " + bcToken.DateVal);
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
@@ -120,7 +120,7 @@ namespace AppA.Controllers
                 string publicKeyString = Startup.StaticConfig.GetSection("DSA").Value;
                 string encryptedJWT = Utils.Encrypt(JWT, publicKeyString);
 
-                Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF action: JWT sent for cf " + cf + " ce " + ce + " " + JWT + " " + encryptedJWT);
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF action: JWT sent for cf " + cf + " ce " + ce + " " + JWT + " " + encryptedJWT);
 
                 //POST JWT TO IDPAdapter
                 ViewData["URL"] = Startup.StaticConfig.GetSection("IDPAdapter_uRL").Value;
@@ -130,7 +130,7 @@ namespace AppA.Controllers
             }
             catch (Exception e)
             {
-                Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCF issue: " + e.Message);
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF issue: " + e.Message);
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
         }
@@ -141,25 +141,39 @@ namespace AppA.Controllers
             //INPUT CHECK
             if (form == null)
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCE issue: empty form");
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: empty form");
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
 
-            if (!form.ContainsKey("CodiceElettoreclient") || !form.ContainsKey("bc-cf") || !form.ContainsKey("bc-tk") || String.IsNullOrEmpty(form["CodiceElettoreclient"]) || String.IsNullOrEmpty(form["bc-cf"]) || String.IsNullOrEmpty(form["bc-tk"]))
+            if (!form.ContainsKey("CodiceElettoreclient") || !form.ContainsKey("bc-cf") || !form.ContainsKey("bc-tk") || !form.ContainsKey("bc-dt") || String.IsNullOrEmpty(form["CodiceElettoreclient"]) || String.IsNullOrEmpty(form["bc-cf"]) || String.IsNullOrEmpty(form["bc-dt"]) || String.IsNullOrEmpty(form["bc-tk"]))
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCE issue: bad form");
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: bad form");
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
 
             if (!Utility.Utils.ValidateField(form["bc-cf"], "req_cf"))
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCE issue: wrong cf " + form["bc-cf"]);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: wrong cf " + form["bc-cf"]);
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
 
             if (!Utility.Utils.ValidateField(form["bc-dt"], "req_date"))
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCE issue: wrong dt " + form["bc-dt"]);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: wrong dt " + form["bc-dt"]);
+                return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+            }
+
+            //CE<->DT BLOCKCHAIN CHECK
+            var queryInCFDT = Service.APIService.InvokeChainCode("voters", "Elettori", "getFullElettori", "", form["CodiceElettoreclient"], form["bc-dt"]);
+            Elettore elettoreCFDT = Elettore.parseElettoreFromJSON(queryInCFDT.Content);
+            if (!string.IsNullOrEmpty(elettoreCFDT.ErrorDescription))
+            {
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: error for CE: " + form["CodiceElettoreclient"] + " DT: " + form["bc-dt"] + " ERR: " + elettoreCFDT.ErrorDescription);
+                return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+            }
+            if (string.IsNullOrEmpty(elettoreCFDT.CodiceElettore))
+            {
+                Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: no codice elettore " + form["CodiceElettoreclient"] + " for data di nascita " + form["bc-dt"]);
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
 
@@ -168,12 +182,12 @@ namespace AppA.Controllers
             Token bcToken = Token.parseTokenFromJSON(queryInToken.Content);
             if (!string.IsNullOrEmpty(bcToken.ErrorDescription))
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCE issue: token not found for " + form["bc-cf"]);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: token not found for " + form["bc-cf"]);
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
             if (bcToken.CodiceFiscaleVal != form["bc-cf"])
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCE issue: no token cf match " + form["bc-cf"] + " " + form["bc-tk"]);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: no token cf match " + form["bc-cf"] + " " + form["bc-tk"]);
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
 
@@ -181,7 +195,7 @@ namespace AppA.Controllers
             var diffInSeconds = (DateTime.Now - DateTime.ParseExact(bcToken.DateVal, "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)).TotalSeconds;
             if (diffInSeconds > Int32.Parse(Startup.StaticConfig.GetSection("BlockChain").GetSection("TokenExpire").Value))
             {
-                Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCE issue: token expired for " + form["bc-cf"] + ": " + bcToken.TokenVal + " " + bcToken.DateVal);
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: token expired for " + form["bc-cf"] + ": " + bcToken.TokenVal + " " + bcToken.DateVal);
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
 
@@ -197,7 +211,7 @@ namespace AppA.Controllers
             string publicKeyString = Startup.StaticConfig.GetSection("DSA").Value;
             string encryptedJWT = Utility.Utils.Encrypt(JWT, publicKeyString);
 
-            Utility.Utils.LogTrace(HttpContext.Connection.RemoteIpAddress.ToString(), "LOGINFROMCE action: JWT sent for cf " + form["bc-cf"] + " ce " + form["CodiceElettoreclient"] + " " + JWT + " " + encryptedJWT);
+            Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE action: JWT sent for cf " + form["bc-cf"] + " ce " + form["CodiceElettoreclient"] + " " + JWT + " " + encryptedJWT);
 
             //POST JWT TO IDPAdapter
             ViewData["URL"] = Startup.StaticConfig.GetSection("IDPAdapter_uRL").Value;

@@ -1,10 +1,11 @@
+﻿@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,600);
 
 .italia-it-button {
     display: inline-block;
     position: relative;
     padding: 0;
     color: #FFF;
-    font-family: "Titillium_Web",HelveticaNeue,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+    font-family: "Titillium Web",HelveticaNeue,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
     font-weight: 600;
     line-height: 1em;
     text-decoration: none;
@@ -12,7 +13,7 @@
     text-align: center;
     cursor: pointer;
     overflow: hidden
-}   /*ok*/
+}
 
 .italia-it-button-icon, .italia-it-button-text {
     display: block;
@@ -55,7 +56,7 @@ svg {
 .italia-it-button-size-m {
     font-size: 15px;
     width: 220px
-}   /*ok*/
+}
 
     .italia-it-button-size-m > span img {
         width: 29px;
@@ -85,8 +86,8 @@ svg {
         border: 0
     }
 
-.button-spid {          /*ok*/
-    background-color: #06C;
+.button-spid {
+    background-color: #AA0000;
     color: #FFF
 }
 
@@ -204,7 +205,7 @@ svg {
         }
 
         .spid-idp-button .spid-idp-button-menu li > a img {
-            height: 52px;
+            height: 25px;
             padding: 10px 0 10px 10px;
             border: 0
         }

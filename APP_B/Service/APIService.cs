@@ -117,6 +117,7 @@ namespace AppB.Service
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", "Basic " + Username);
+            //request.AddHeader("Authorization", "Basic aXZhbi5kZWxpY0BvcmFjbGUuY29tOndlbGNvbWVUbzEyMzQjI0Nsb3Vk");
             
             String body = @"{" + "\n" + @" ""chaincode"": """ + chainCodeName + "\"," + "\n" +
             @"""args"": [" + "\n" +

@@ -1,5 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -74,7 +133,7 @@
     <value>Per entrare nella sezione di voto premere il pulsante</value>
   </data>
   <data name="Help CE Error" xml:space="preserve">
-    <value>Elettore non ammesso al voto. Per informazioni contattare l’Ufficio consolare</value>
+    <value>Attenzione! Formato del codice elettore non corretto. Inserirlo nuovamente.</value>
   </data>
   <data name="Help Sessione 1" xml:space="preserve">
     <value>Attenzione! Sessione scaduta per inattività dell'utente.</value>
@@ -203,7 +262,7 @@
     <value>Vedi l' esempio</value>
   </data>
   <data name="Voto1" xml:space="preserve">
-    <value>A) INGRESSO NELLA CABINA ELETTORALE VIRTUALE: Cliccando sul pulsante VAI AL VOTO, in fondo a questa pagina, si accede alla cabina elettorale. Sarà possibile scaricare il manifesto elettorale contenente tutte le liste ammesse al voto con i relativi candidati per il Com.It.Es di appartenenza. Sarà inoltre visualizzato il proprio codice di convalida, generato automaticamente dal sistema. Questo codice garantirà la segretezza del voto. Per completare le operazioni di voto saranno a disposizione 30 minuti di tempo, superati i quali sarà necessario effettuare un nuovo accesso al portale.</value>
+    <value>A)  INGRESSO NELLA CABINA ELETTORALE VIRTUALE: Dopo aver accettato l'informativa relativa alla privacy apparirà il pulsante VAI AL VOTO. Cliccando sul pulsante VAI AL VOTO, in fondo a questa pagina, si accede alla cabina elettorale. Sarà possibile scaricare il manifesto elettorale contenente tutte le liste ammesse al voto con i relativi candidati per il Com.It.Es di appartenenza. Sarà inoltre visualizzato il proprio codice di convalida, generato automaticamente dal sistema. Questo codice garantirà la segretezza del voto. Per completare le operazioni di voto saranno a disposizione 30 minuti di tempo, superati i quali sarà necessario effettuare un nuovo accesso al portale.</value>
   </data>
   <data name="Voto2" xml:space="preserve">
     <value>B) ESPRESSIONE DI VOTO: Per esprimere il proprio voto di lista si dovrà selezionare la lista prescelta. Successivamente, per esprimere eventuali voti di preferenza, sarà possibile selezionare i candidati nell’ambito della medesima lista. Qualora non si voglia esprimere un voto a favore di una lista di candidati, si potrà selezionare la scheda bianca. In questo modo il tuo voto non verrà attribuito ad alcuna lista.</value>

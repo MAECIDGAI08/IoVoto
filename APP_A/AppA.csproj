@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <NeutralLanguage>it-IT</NeutralLanguage>
-    <UserSecretsId>ac457f86-ece3-4f00-8f04-8794add4d715</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -16,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="Developers.Italia.SPID.SAML" Version="1.0.2.1" />
 	<PackageReference Include="HtmlRenderer.Core" Version="1.5.0.6" />
 	<PackageReference Include="HtmlRenderer.PdfSharp" Version="1.5.0.6" />
 	<PackageReference Include="Microsoft.AspNetCore" Version="2.1.7" />
@@ -40,25 +38,19 @@
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0-preview.1.20120.5" />
-    <PackageReference Include="System.Runtime" Version="4.3.1" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0-preview.5.21301.5" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="4.5.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0-preview.5.21301.5" />
     <PackageReference Include="System.Text.Json" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\img\LogoRepubblica - Copia.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="Views\Public\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Public\" />
-  </ItemGroup>
-  
-	<ItemGroup>
-    <Content Include="Logs\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <Content Update="wwwroot\img\LogoRepubblica - Copia.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

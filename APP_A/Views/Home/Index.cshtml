@@ -9,7 +9,6 @@
 @inject IStringLocalizer<SharedResource> Localizer
 @{
     Layout = "_Layout";
-    int SitoAperto = ViewBag.SitoAperto;
     bool debug = false;
 }
 
@@ -21,13 +20,13 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                                                
-                        <img src="~/img/elections.png" class="imgTestata" />
+                        <img src="~/img/elections.png" class="imgTestata img-fluid" />
                          
                     </div>
 
                     <div class="carousel-item">
 
-                        <img src="~/img/ballot.png" class="imgTestata" />
+                        <img src="~/img/ballot.png" class="imgTestata img-fluid" />
                        
                     </div>
 
@@ -62,26 +61,11 @@
 
         </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 myspid text-center">
-            @if (SitoAperto == 0)
-            {
-                @*@SitoAperto*@
-                <partial name="_SitoPrimaElezione" />
-            }
 
-            @if (SitoAperto == 1)
-            {
+   
+            <partial name="_SitoDopoElezione" />
 
-                @*@SitoAperto*@
-                <!-- AGID - SPID IDP BUTTON MEDIUM "ENTRA CON SPID" * begin * -->
-                <partial name="_Spid" />
-
-            }
-
-            @if (SitoAperto == 2)
-            {
-                @*@SitoAperto*@
-                <partial name="_SitoDopoElezione" />
-            }
+            <partial name="_Spid" />
 
             @if (debug == true)
             {
@@ -95,7 +79,7 @@
                             <a class="pc-button pc-button-blue form-submit" data-form="register-form" asp-controller="Home" title="@Localizer["UI-Leggi-Titolo"]" asp-action="CodiceElettore">@Localizer["UI-Leggi"]</a>
                         </li>
                         <li>
-                            <a class="pc-button pc-button-blue form-submit" data-form="register-form" asp-controller="Home" title="@Localizer["UI-Leggi-Titolo"]" asp-action="RicevutadiVoto">@Localizer["UI-Leggi"]</a>
+                            <a class="pc-button pc-button-blue form-submit" data-form="register-form" asp-controller="vaialvoto" title="@Localizer["UI-Leggi-Titolo"]" asp-action="RicevutadiVoto">@Localizer["UI-Leggi"]</a>
                         </li>
                         <li>
                             <a class="pc-button pc-button-blue form-submit" asp-controller="Home" title="@Localizer["UI-Leggi-Titolo"]" asp-action="ControlloVoto">Controllo Voto]</a>
@@ -107,7 +91,13 @@
             }
         </div>
     </div>
-    <div class="row align-items-start mb-5">
+    <div class="row align-items-start mb-5 mt-5">
+        <div class="col-md-4">
+            <div class="alert alert-success lookB lookH" role="alert">
+                <i class="fa fa-info-circle fa-3x fa-pull-left" aria-hidden="true"></i>
+                <p><b><u>ATTENZIONE! L'UNICO VOTO VALIDO E' QUELLO ESPRESSO SUL PLICO CARTACEO</u></b></p>
+            </div>
+        </div>
         <div class="col-md-4">
             <div class="alert alert-success lookB lookH" role="alert">
                 <i class="fa fa-info-circle fa-3x fa-pull-left" aria-hidden="true"></i>
@@ -127,9 +117,11 @@
             <div class="alert alert-success lookB lookH" role="alert">
                 <i class="fa fa-info-circle fa-3x fa-pull-left" aria-hidden="true"></i>
                 <p>
-                    In caso di problemi nella procedura di voto, si suggerisce di inviare una mail a <a href="mailto:iovoto@esteri.it">iovoto@esteri.it</a>, indicando almeno il proprio
-                    cognome nella richiesta di assistenza. Le richieste verranno prese in carico tra le ore <b>8.00 e le ore 16.00 italiane</b>, per cui in alcuni casi sarà necessario attendere il giorno successivo per avere riscontro.
-                </p>
+                    
+   
+    In caso di problemi nella procedura di voto, si suggerisce di inviare una mail a <a href="mailto:iovoto@esteri.it">iovoto@esteri.it</a>, indicando almeno il proprio
+    cognome nella richiesta di assistenza. Le richieste verranno prese in carico tra le ore <b>8.00 e le ore 16.00 italiane</b>, per cui in alcuni casi sarà necessario attendere il giorno successivo per avere riscontro.
+</p>
                 <p><u><b>ATTENZIONE! NON SI FORNISCE ASSISTENZA IN CASO DI PROBLEMI DI AUTENTICAZIONE COL SERVIZIO SPID.</b></u></p> 
                 <p>Per assistenza su SPID è possibile consultare questo link dedicato: <a href="https://test-www.spid.gov.it/ottieni-assistenza-dagli-identity-provider/">Aiuto SPID Providers</a></p>   
                

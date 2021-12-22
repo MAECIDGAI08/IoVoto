@@ -7,22 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
-using TheArtOfDev.HtmlRenderer.PdfSharp;
 using static AppA.Service.Utils;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Utility;
+using Utils = Utility.Utils;
 using System.Globalization;
 using static AppA.Models.SharedKeys;
-// IP tracking
+
 
 namespace AppA.Controllers
 {
@@ -134,6 +128,48 @@ namespace AppA.Controllers
             return Startup.StaticConfig.GetSection("AppB_URL").Value;
         }
 
+        // per controllo se votazione è aperta o no
+        public bool controlVVC;
+
+        public bool controlVVCInizio = true;
+
+        public object PuoVotare(DateTime OraIngresso, int offsetdaBC, DateTime FineVotazione, DateTime InzioVotazione)
+        {
+            // setto variabile di check finale           
+
+            // calcolo ora locale del votante
+            DateTime OraLocaleVotante = (OraIngresso.AddHours(offsetdaBC));
+
+            // Calcolo l'intervallo tra le due date
+            TimeSpan interval = OraLocaleVotante - FineVotazione;
+
+            TimeSpan intervalInizio = OraLocaleVotante - InzioVotazione;
+
+            // check method 2
+            TimeSpan interval2 = FineVotazione.Subtract(OraLocaleVotante);
+
+            // assegno a stringa interval
+            String IntervalHR = interval.ToString();
+            String IntervalHR2 = intervalInizio.ToString();
+
+            string subIHR = IntervalHR.Substring(0, 1);
+            string subIHR2 = IntervalHR2.Substring(0, 1);
+
+            // se subIHR è uguale a "-", ha ancora tempo per votare       
+
+            if (subIHR2 == "-")
+            {
+                return controlVVCInizio = false;
+            }
+
+            if (subIHR == "-")
+            {
+                return controlVVC = false;
+            }
+
+            return controlVVC = true;
+        }
+
         public string UtenteGenericoSessione()
         {
             string UtenteInSessione = HttpContext.Session.GetString(SessionKeysessionUser) + " | " + HttpContext.Session.GetString(SessionKeyIP);
@@ -186,16 +222,17 @@ namespace AppA.Controllers
         public IActionResult Index()
         {
 
-            /*string JWT = "{sub=E/1234567/123456, aud=oracle, nbf=1633183261, iss=oracle, exp=1633183441, iat=1633183321, jti=41b3e89e-697b-46db-8940-7f655b721bff}";
-            string publicKeyString = Startup.StaticConfig.GetSection("DSA").Value;
-            string encryptedJWT = Utility.Utils.Encrypt(JWT, publicKeyString);
-            string decryptedJWT = Utility.Utils.Decrypt(encryptedJWT, publicKeyString);*/
-            
+            //string JWT = "{sub=E/1234567/123456, aud=oracle, nbf=1633183261, iss=oracle, exp=1633183441, iat=1633183321, jti=41b3e89e-697b-46db-8940-7f655b721bff}";
+            //string publicKeyString = Startup.StaticConfig.GetSection("DSA").Value;
+            //string encryptedJWT = Utility.Utils.Encrypt(JWT, publicKeyString);
+            //string decryptedJWT = Utility.Utils.Decrypt(encryptedJWT, publicKeyString);
+
             // FASE A:
             // controllo se si è in arco temporale di votazione o no
-            var inizioVotazione = Startup.StaticConfig.GetSection("InizioVotazione").Value;
+            var inizioVotazione = Startup.StaticConfig.GetSection("InizioVotazione").Value; 
             var fineVotazione = Startup.StaticConfig.GetSection("FineVotazione").Value;
 
+            ViewData["InzioVotazione"] = inizioVotazione;
             ViewData["FineVotazione"] = fineVotazione;
             ViewData["TempoSessione"] = TempoSessione;
 
@@ -204,14 +241,6 @@ namespace AppA.Controllers
             HttpContext.Session.SetString("_UrlAppB", GetUrlAppB());
 
             Console.WriteLine(HttpContext.Session.GetString("_UrlAppA"));
-      
-            // invoco il metodo di controllo passandogli data di inizio e fine
-            //VotazioneAperta(StartVotazione, EndVotazione);
-
-            // CHECK Fuso orario scaduto
-            // 0 prima dell'inizio della votazione
-            // 1 in tempo di votazione
-            // -1 fuori dal termine di votazione
 
             //RECUPERO DATI PER PULSANTI SPID
             ViewData["DisableSPID"] = Startup.StaticConfig.GetSection("SPID").GetSection("DisableSPID").Value;
@@ -226,29 +255,11 @@ namespace AppA.Controllers
             ViewData["spiditalia"]  = Startup.StaticConfig.GetSection("SPID").GetSection("URL").GetSection("spiditalia").Value;
             ViewData["sielteid"]    = Startup.StaticConfig.GetSection("SPID").GetSection("URL").GetSection("sielteid").Value;
             ViewData["timid"]       = Startup.StaticConfig.GetSection("SPID").GetSection("URL").GetSection("timid").Value;
-            ViewData["Environment"] = Startup.StaticConfig.GetSection("Environment").Value;
-            //
-
+            ViewData["Environment"] = Startup.StaticConfig.GetSection("Environment").Value;          
 
             if (inizioVotazione == "" || fineVotazione == "")
             {
                 return RedirectToAction("Errore");
-            }
-                                         
-            if (VotazioneAperta(DateTime.Parse(inizioVotazione), DateTime.Parse(fineVotazione)) == 0)
-            {
-                ViewBag.Exit = false;
-                ViewBag.SitoAperto = 0;
-                ViewData["InizioVotazione"] = inizioVotazione;
-                return View("Index");
-            }
-            // else finale per caso 2
-            else if (VotazioneAperta(DateTime.Parse(inizioVotazione), DateTime.Parse(fineVotazione)) == -1)
-            {
-                ViewBag.Exit = false;
-                ViewBag.SitoAperto = 2;
-                ViewData["FineVotazione"] = fineVotazione;
-                return View("Index");
             }
                       
             // scrittura logger locale per utente anonimo
@@ -287,12 +298,12 @@ namespace AppA.Controllers
         
         public IActionResult CodiceElettore(String t = null)
         {
-            Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "COIDCEELETTORE info: GET " + t);
+            Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CODICEELETTORE info: GET " + t);
 
             ////INPUT CHECK
             if (String.IsNullOrEmpty(t))
             {
-                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "COIDCEELETTORE issue: empty t");
+                Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CODICEELETTORE issue: empty t");
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
 
@@ -350,21 +361,10 @@ namespace AppA.Controllers
                     return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
                 }
 
-                // SET SESSIONE
-                //User user = new User() { UserIP = HttpContext.Connection.RemoteIpAddress.ToString(), UserName = CreaGUID() };
-
                 //SET VIEWDATA
                 ViewData["bc-tk"] = token;
                 ViewData["bc-cf"] = cf;
                 ViewData["bc-dt"] = dt;
- 
-
-                //ViewData["bc-tk"] = "XXX";
-                //ViewData["bc-cf"] = "GTTNRC92B19M208W";
-                //ViewData["bc-dt"] = "19/02/1992";
-
-
-
                 // fine emilio
 
                 // passiamo il comites alla pagina
@@ -377,7 +377,7 @@ namespace AppA.Controllers
                     // setto la proprietà a false => utilizzata come condizione nella vista
                     ViewData["controlloCodicePratica"] = false;
                 }
-                
+
                 ViewData["Title"] = "Inserimento Codice Elettore";
                 ViewBag.Exit = true;
                 
@@ -389,8 +389,9 @@ namespace AppA.Controllers
                 return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
             }
         }
-        
-        [HttpPost]  //riceve il codice elettore dal form
+
+[HttpPost]  //riceve il codice elettore dal form
+
         public async Task<IActionResult> GetInpuFromCodiceElettoreClient(IFormCollection form)
         {
             return null;           
@@ -404,7 +405,7 @@ namespace AppA.Controllers
             ViewData["UrlLogout"] = Startup.StaticConfig.GetSection("UrlLogout");
             //_logger.LogInformation("UTENTE: accesso alla pagina RicevutadiVoto");
             _logger.LogInformation(UteLogNam + NomeUtente() + UtenteGenerico() + UteLogDo + " TimeOver");
-            return SessionOut();
+            return View();
         }
         
         public IActionResult Faq()
@@ -424,6 +425,18 @@ namespace AppA.Controllers
             ViewData["Message"] = "Sessione di voto interrotta.";
             ViewData["UrlLogout"] = Startup.StaticConfig.GetSection("UrlLogout").Value;
             ViewBag.Exit = false;
+            return View();
+        }
+
+        public IActionResult LogoutVotato()
+        {
+            ViewData["UrlLogout"] = Startup.StaticConfig.GetSection("UrlLogout").Value;
+
+            ViewData["Title"] = "Fine votazione";
+            // gestione pulsante esci in header
+            ViewBag.Exit = false;
+            //RecordInSession(ControllerAndAction());
+            _logger.LogInformation(UteLogNam + NomeUtente() + UtenteGenerico() + " | effettua la procedura di Logout");
             return View();
         }
         public IActionResult CookiePolicy()
@@ -473,9 +486,17 @@ namespace AppA.Controllers
         public IActionResult Errore()
         {
             ViewData["UrlLogout"] = Startup.StaticConfig.GetSection("UrlLogout").Value;
+            ViewData["Title"] = "Errore applicazione";
             ViewBag.Exit = false;
             _logger.LogInformation(UteLogNam + UtenteGenericoSessione() + UteLogDo + ControllerAndAction());            
             return View();           
+        }
+        public IActionResult ErroreCodiceElettore()
+        {
+            ViewBag.Exit = false;
+            ViewData["Title"] = "Codice Elettore Errato";
+            _logger.LogInformation(UteLogNam + UtenteGenericoSessione() + UteLogDo + ControllerAndAction());
+            return View();
         }
         #endregion
     }

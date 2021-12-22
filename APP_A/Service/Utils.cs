@@ -47,7 +47,7 @@ namespace AppA.Service
 
         public static DateTime IngressoUtente()
         {
-            DateTime quando = DateTime.Now.ToLocalTime();
+            DateTime quando = DateTime.UtcNow;
             return quando;
         }
 
@@ -78,7 +78,21 @@ namespace AppA.Service
             }
             return genere;
         }
-    
+
+        public static string NatoNata(string qualeGenere)
+        {
+            string genereNascita = "";
+            if (qualeGenere == "M")
+            {
+                genereNascita = "Nato";
+            }
+            else if (qualeGenere == "F")
+            {
+                genereNascita = "Nata";
+            }
+            return genereNascita;
+        }
+
     }
 
     // estensioni default per handler oggetti di sessione

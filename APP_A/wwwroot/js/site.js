@@ -40,11 +40,11 @@ function prosegui() {
     var bottoneVaiAlVoto = document.querySelector('button');
     if ($('#CheckVoto').is(':checked')) {       
         $('#VaiAlVoto').removeClass('hidden');        
-        //$('#InfoConsenso').addClass('hidden');
+       /* $('#InfoConsenso').addClass('hidden');*/
     }
     else {
         $('#VaiAlVoto').addClass('hidden')
-        //$('#InfoConsenso').removeClass('hidden');
+        /*$('#InfoConsenso').removeClass('hidden');*/
     }
 };
 
@@ -61,7 +61,6 @@ $('#openDivImg').click(function () {
 
 function esempio(valore)
 {
-    //alert("Lino");
     if (valore == 1) {
         $('#fileImg').removeClass('hidden');
     }

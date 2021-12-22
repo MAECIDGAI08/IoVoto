@@ -1,7 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Localization
-@using Microsoft.AspNetCore.Html;
 @inject IViewLocalizer Localizer
+
+@{
+    Layout = "_LayoutVoted";
+}
 
 <div class="container">
     @inject IStringLocalizer<SharedResource> Localizer
@@ -12,21 +15,23 @@
             <div class="lookC pt-2 pb-2 pl-2 pr-2">
                 <div>
                     <i class="fa fa-file-download fa-4x fa-pull-left verde" aria-hidden="true"></i>
-                    <h2 class="font-weight-bold">Gentile Elettore, premendo il pulsante sottostante potrai scaricare e visionare la tua ricevuta di voto, 
-                    che comprova la tua partecipazione alla sperimentazione sul portale @Localizer["Sito-Nome"]</h2>
+                    <h2 class="font-weight-bold">
+                        Gentile Elettore, premendo il pulsante sottostante potrai scaricare e visionare la tua ricevuta di voto,
+                        che comprova la tua partecipazione alla sperimentazione sul portale @Localizer["Sito-Nome"]
+                    </h2>
                     @*<h2 class="font-weight-bold mae divConfermaVoto">@Localizer["CV-Ct2"]</h2>*@
                 </div>
-                    <div class="text-center">
-                        <a class="pc-button pc-button-blue text-uppercase" asp-controller="vaialvoto" asp-action="StampaRicevutaDiVoto" target="_blank">
-                         stampa ricevuta     
-                        </a>   
-                        
-                        @*<a class="pc-button pc-button-blue" href="~/PDF/pdf-test.pdf" download="~/PDF/pdf-test.pdf">
+                <div class="text-center">
+                    <a class="pc-button pc-button-blue text-uppercase" asp-controller="vaialvoto" asp-action="StampaRicevutaDiVoto" target="_blank">
+                        stampa ricevuta
+                    </a>
+
+                    @*<a class="pc-button pc-button-blue" href="~/PDF/pdf-test.pdf" download="~/PDF/pdf-test.pdf">
                             COM.IT.ES.
                             Data 25-11-2021
                         </a>*@
-                    </div>
-               
+                </div>
+
             </div>
 
         </div>

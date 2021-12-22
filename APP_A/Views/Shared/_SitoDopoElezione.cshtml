@@ -1,8 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
 @using Microsoft.Extensions.Localization
-<div class="lookC mb-5">
-    <i class="fa fa-calendar-times-o fa-3x fa-pull-left text-warning" aria-hidden="true"></i>
-    <h2 class="text-left">Gentile elettore,</h2>
-    <h3 class="text-left">le elezioni sono terminate il</h3>
-    <h2>@ViewData["FineVotazione"]</h2>
+<div class="lookC mb-5 p-4">
+    <i class="fa fa-calendar-times-o fa-3x fa-pull-left" aria-hidden="true"></i>
+    <h4 class="text-left">Gentile elettore, le votazioni si apriranno il <b>@ViewData["InzioVotazione"] (UTC)</b></h4>
+    <h4 class="text-left"> e si chiuderanno il <b>@ViewData["FineVotazione"] (UTC)</b></h4>
 </div>

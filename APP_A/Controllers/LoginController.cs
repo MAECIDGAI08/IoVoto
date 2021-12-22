@@ -41,7 +41,7 @@ namespace AppA.Controllers
             _logger = logger;
             this.env = env;
         }
-     
+
         public IActionResult LoginFromCF(String t = null)
         {
             Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCF info: GET " + t);
@@ -114,7 +114,7 @@ namespace AppA.Controllers
                 Int32 iat = (Int32)(now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
                 Int32 nbf = (Int32)(now.AddSeconds(-60).Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
                 Int32 exp = (Int32)(now.AddSeconds(120).Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-                String JWT = "{sub=" + ce.Replace('/','_') + ", aud=oracle, nbf=" + nbf + ", iss=oracle, exp=" + exp + ", iat=" + iat + ", jti=" + newToken.ToString() + "}";
+                String JWT = "{sub=" + ce.Replace('/', '_') + ", aud=oracle, nbf=" + nbf + ", iss=oracle, exp=" + exp + ", iat=" + iat + ", jti=" + newToken.ToString() + "}";
 
                 //ENCRYPT JWT
                 string publicKeyString = Startup.StaticConfig.GetSection("DSA").Value;
@@ -136,7 +136,7 @@ namespace AppA.Controllers
         }
 
         [HttpPost]
-        public IActionResult LoginFromCE(IFormCollection form) 
+        public IActionResult LoginFromCE(IFormCollection form)
         {
             //INPUT CHECK
             if (form == null)
@@ -169,12 +169,12 @@ namespace AppA.Controllers
             if (!string.IsNullOrEmpty(elettoreCFDT.ErrorDescription))
             {
                 Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: error for CE: " + form["CodiceElettoreclient"] + " DT: " + form["bc-dt"] + " ERR: " + elettoreCFDT.ErrorDescription);
-                return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+                return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/ErroreCodiceElettore");
             }
             if (string.IsNullOrEmpty(elettoreCFDT.CodiceElettore))
             {
                 Utils.LogTrace(Request.Headers["X-Forwarded-For"], "LOGINFROMCE issue: no codice elettore " + form["CodiceElettoreclient"] + " for data di nascita " + form["bc-dt"]);
-                return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/Errore");
+                return Redirect(Startup.StaticConfig.GetSection("AppA_URL").Value + "/Home/ErroreCodiceElettore");
             }
 
             //TOKEN BC CHECK
@@ -205,7 +205,7 @@ namespace AppA.Controllers
             Int32 iat = (Int32)(now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             Int32 nbf = (Int32)(now.AddSeconds(-60).Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             Int32 exp = (Int32)(now.AddSeconds(120).Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            String JWT = "{sub=" + form["CodiceElettoreclient"].ToString().Replace('/','_') + ", aud=oracle, nbf=" + nbf + ", iss=oracle, exp=" + exp + ", iat=" + iat + ", jti=" + newToken.ToString() + "}";
+            String JWT = "{sub=" + form["CodiceElettoreclient"].ToString().Replace('/', '_') + ", aud=oracle, nbf=" + nbf + ", iss=oracle, exp=" + exp + ", iat=" + iat + ", jti=" + newToken.ToString() + "}";
 
             //ENCRYPT JWT
             string publicKeyString = Startup.StaticConfig.GetSection("DSA").Value;

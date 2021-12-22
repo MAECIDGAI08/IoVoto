@@ -63,7 +63,7 @@ label.liste {
     width: 0px;
     text-align: left;
     font-weight: bold;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     line-height: 1em;
 }
 
@@ -250,8 +250,8 @@ margin-top: 1.6em;
 
 
 .imgTestata {
-    /*width: 256px;*/  
-    width: 100%;
+    width: 256px;  
+    /*w*//*idth: 100%;*/
     height: auto;
 }
 
@@ -330,6 +330,14 @@ h6 {
     font-family: 'Times New Roman', Times, serif;
     color: black;
     font-size: 16px;
+     
+}
+
+.bg {
+    background-image: url("../img/Fac-Simile.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .ufficiale {
@@ -395,6 +403,12 @@ margin-top: 3em !important;
 }
 
 
+
 /* fine classi pdf */
+
+
+.Ridimensione {
+    word-wrap: break-word;
+}
 
 

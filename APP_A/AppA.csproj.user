@@ -8,12 +8,15 @@
     <WebStackScaffolding_ControllerDialogWidth>650</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_DbContextDialogWidth>650</WebStackScaffolding_DbContextDialogWidth>
     <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
-    <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\f.olivieri\source\repos\PortaleVotoElettronico\APP A\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Resources\SharedResource.en.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\SharedResource.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>

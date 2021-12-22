@@ -168,7 +168,7 @@ a {
     }
     /*evidenzia il tasto al passaggio del mouse*/
     .pc-button.pc-button-blue:hover {
-        color: #FFFFFF;
+        color: #FFFFFF !important;
         background-color: #2E629C;
     }
 

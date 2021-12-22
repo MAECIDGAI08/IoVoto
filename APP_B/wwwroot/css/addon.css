@@ -567,11 +567,15 @@ select.list-dt {
     color: darkgrey;
     padding: 0.8em 0.25em 0.25em 0.25em;
 }
+    /*icone*/
+    #progressbar .active {
+        color: #000000
+    }
 
-#progressbar .general:before {
-    font-family: Material Icons;
-    content: "\e873";
-}
+    #progressbar .general:before {
+        font-family: Material Icons;
+        content: "\e873";
+    }
 
     #progressbar .personal:before {
         font-family: Material Icons;
@@ -744,14 +748,6 @@ select.list-dt {
     #progressbar li.active:after {
         background: #0066CC;
     }
-
- #progressbar .active {
-     color: #0066CC;
- }
-
-  #progressbar .current-li {
-     color: #28a745!important;
- }
 
 /*.radio-group {
     position: relative;

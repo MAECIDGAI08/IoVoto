@@ -162,6 +162,8 @@ function init() {
 
 function twoback() {
     var candidati = $('#confirmWhiteCard');
+    //$('#btnRiepilogo').removeClass("previous");
+    //$('#btnRiepilogo').removeClass("previousTwoSteps");
 
     if (candidati.val() == 1) {
 

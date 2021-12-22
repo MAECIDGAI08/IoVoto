@@ -112,12 +112,12 @@ namespace AppB.Service
         {
             IRestResponse response = null;
             var client = new RestClient(Endpoint);
-            //var client = new RestClient("https://comitestest-elettoricomites-fra.blockchain.ocp.oraclecloud.com:7443/restproxy/api/v2/channels/default/transactions");
+            
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("Authorization", "Basic " + Username);
-            //request.AddHeader("Authorization", "Basic aXZhbi5kZWxpY0BvcmFjbGUuY29tOndlbGNvbWVUbzEyMzQjI0Nsb3Vk");
+           
             
             String body = @"{" + "\n" + @" ""chaincode"": """ + chainCodeName + "\"," + "\n" +
             @"""args"": [" + "\n" +

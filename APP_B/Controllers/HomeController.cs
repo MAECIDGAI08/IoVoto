@@ -292,8 +292,6 @@ namespace AppB.Controllers
                 //GET & CHECK IDCS2 DATA
                 IDSC2_pseudonimo = Request.Headers["pseudonimo"];
 
-                //IDSC2_pseudonimo = "B968C35C69F5DDC4@esteri.it";
-
                 if (String.IsNullOrEmpty(IDSC2_pseudonimo))
                 {
                     Utility.Utils.LogTrace(Request.Headers["X-Forwarded-For"], "CABINAELETTORALE issue: empty pseudonimo");
@@ -640,7 +638,7 @@ namespace AppB.Controllers
             {
                     ViewBag.Exit = false;
                 _logger.LogInformation(UteLogNam + UtenteGenerico() + " | session is DOWN");
-                //return LocalRedirect("/Home/Sessione");
+                
                 return RedirectToAction ("Sessione");
             }
             else
